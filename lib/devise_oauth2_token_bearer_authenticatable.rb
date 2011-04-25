@@ -4,8 +4,6 @@ require 'devise_oauth2_token_bearer_authenticatable/strategy'
 require 'devise_oauth2_token_bearer_authenticatable/model'
 require 'devise_oauth2_token_bearer_authenticatable/schema'
 require 'devise_oauth2_token_bearer_authenticatable/engine'
-# require 'devise_oauth2_token_bearer_authenticatable/railtie'
-# require 'devise_oauth2_token_bearer_authenticatable/routes'
 
 module Devise
   module Oauth2TokenBearerAuthenticatable
