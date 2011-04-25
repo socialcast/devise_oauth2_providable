@@ -3,6 +3,7 @@ require 'rack/oauth2'
 require 'devise_oauth2_token_bearer_authenticatable/strategy'
 require 'devise_oauth2_token_bearer_authenticatable/model'
 require 'devise_oauth2_token_bearer_authenticatable/schema'
+require 'devise_oauth2_token_bearer_authenticatable/railtie'
 
 module Devise
   module Oauth2TokenBearerAuthenticatable
