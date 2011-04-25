@@ -1,0 +1,6 @@
+Ryan Sonnek - Original Author
+
+
+Complete list of contributors:
+https://github.com/socialcast/devise_oauth2_token_bearer_authenticatable/contributors
+
