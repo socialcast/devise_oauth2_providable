@@ -11,6 +11,7 @@ module Oauth2Token
       validates :client, :expires_at, :presence => true
       validates :token, :presence => true, :uniqueness => true
 
+      # TODO: this should be a default scope once rails default_scope supports lambda's
       scope :valid, lambda {
         where(self.arel_table[:expires_at].gteq(Time.now.utc))
       }

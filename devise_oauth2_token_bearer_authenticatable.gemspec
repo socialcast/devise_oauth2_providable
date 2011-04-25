@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Ryan Sonnek"]
   s.email       = ["ryan@socialcast.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{OAuth2 Provider for Rails3 applications}
+  s.description = %q{add OAuth2 authentication to rails3 application}
 
   s.rubyforge_project = "devise_oauth2_token_bearer_authenticatable"
 
