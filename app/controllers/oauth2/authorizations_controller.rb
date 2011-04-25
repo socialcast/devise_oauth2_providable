@@ -32,7 +32,7 @@ class Oauth2::AuthorizationsController < ApplicationController
       @client = Client.find_by_identifier(req.client_id) || req.bad_request!
       res.redirect_uri = @redirect_uri = req.verify_redirect_uri!(@client.redirect_uri)
       if allow_approval
-        if params[:approved].present?
+        if params[:approve].present?
           case req.response_type
           when :code
             authorization_code = current_user.authorization_codes.create(:client_id => @client, :redirect_uri => @redirect_uri)

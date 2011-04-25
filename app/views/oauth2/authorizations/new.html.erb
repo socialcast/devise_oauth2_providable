@@ -1,15 +1,5 @@
-<h2>
-  <%= link_to @client.name, @client.website %>
-  is requesting access to your account.
-</h2>
+<h2><%= link_to @client.name, @client.website %> is permission to access your resources.</h2>
 
-<%= form_tag oauth2_authorizations_path do %>
-  <%= hidden_field_tag :client_id, @client.identifier %>
-  <%= hidden_field_tag :response_type, @response_type %>
-  <%= hidden_field_tag :redirect_uri, @redirect_uri %>
-
-  <%= check_box_tag :approved %>
-  <%= submit_tag 'Approve' %>
-  <%= link_to 'Reject', @redirect_uri + '?error_code=rejected....' %>
-<% end %>
+<%= render 'oauth2/authorizations/form', :client => @client, :response_type => @response_type, :redirect_uri => @redirect_uri, :action => :approve %>
+<%= render 'oauth2/authorizations/form', :client => @client, :response_type => @response_type, :redirect_uri => @redirect_uri, :action => :deny %>
 
