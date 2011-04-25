@@ -31,6 +31,15 @@ module Devise
         end
         migration.add_index :refresh_tokens, :token
         migration.add_index :refresh_tokens, :expires_at
+
+        migration.create_table :authorization_codes do |t|
+          t.belongs_to :user, :client
+          t.string :token
+          t.datetime :expires_at
+          t.timestamps
+        end
+        migration.add_index :authorization_codes, :token
+        migration.add_index :authorization_codes, :expires_at
       end
 
       def self.down(migration)
