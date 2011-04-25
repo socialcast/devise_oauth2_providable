@@ -1,3 +1,5 @@
+require 'oauth2_token'
+
 class AuthorizationCode < ActiveRecord::Base
   include Oauth2Token
 

@@ -36,6 +36,7 @@ module Devise
           t.belongs_to :user, :client
           t.string :token
           t.datetime :expires_at
+          t.string :redirect_uri
           t.timestamps
         end
         migration.add_index :authorization_codes, :token
