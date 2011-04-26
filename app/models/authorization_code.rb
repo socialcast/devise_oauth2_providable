@@ -1,7 +1,7 @@
-require 'oauth2_token'
+require 'expirable_token'
 
 class AuthorizationCode < ActiveRecord::Base
-  include Oauth2Token
+  include ExpirableToken
 
   def access_token
     @access_token ||= expired! && user.access_tokens.create(:client => client)

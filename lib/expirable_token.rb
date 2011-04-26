@@ -1,4 +1,4 @@
-module Oauth2Token
+module ExpirableToken
   def self.included(klass)
     klass.class_eval do
       cattr_accessor :default_lifetime

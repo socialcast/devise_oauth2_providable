@@ -1,7 +1,7 @@
-require 'oauth2_token'
+require 'expirable_token'
 
 class AccessToken < ActiveRecord::Base
-  include Oauth2Token
+  include ExpirableToken
   self.default_lifetime = 15.minutes
   belongs_to :refresh_token
 
