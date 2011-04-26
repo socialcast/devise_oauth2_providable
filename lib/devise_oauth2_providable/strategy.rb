@@ -2,7 +2,7 @@ require 'devise/strategies/base'
 
 module Devise
   module Strategies
-    class Oauth2TokenBearerAuthenticatable < Base
+    class Oauth2Providable < Base
       def valid?
         env[Rack::OAuth2::Server::Resource::ACCESS_TOKEN].present?
       end
@@ -16,4 +16,4 @@ module Devise
   end
 end
 
-Warden::Strategies.add(:oauth2_token_bearer_authenticatable, Devise::Strategies::Oauth2TokenBearerAuthenticatable)
+Warden::Strategies.add(:oauth2_providable, Devise::Strategies::Oauth2Providable)

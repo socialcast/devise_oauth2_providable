@@ -1,7 +1,7 @@
 require 'devise/schema'
 
 module Devise
-  module Oauth2TokenBearerAuthenticatable
+  module Oauth2Providable
     module Schema
       def self.up(migration)
         migration.create_table :clients do |t|
