@@ -1,6 +1,6 @@
-# devise_oauth2_token_bearer_authenticatable
+# devise_oauth2_providable
 
-Support OAuth2 authentication for your API.
+Rails3 engine that brings OAuth2 Provider support to your application.
 
 http://tools.ietf.org/html/draft-ietf-oauth-v2-15
 
@@ -8,17 +8,17 @@ http://tools.ietf.org/html/draft-ietf-oauth-v2-15
 
 ```ruby
 # Bundler Gemfile
-gem 'oauth2_token_bearer_authenticatable'
+gem 'devise_oauth2_providable'
 ```
 
 ```ruby
 # create new Rails migration
 class CreateOauth2Schema < ActiveRecord::Migration
   def self.up
-    Devise::Oauth2TokenBearerAuthenticatable::Schema.up(self)
+    Devise::Oauth2Providable:Schema.up(self)
   end
   def self.down
-    Devise::Oauth2TokenBearerAuthenticatable::Schema.down(self)
+    Devise::Oauth2Providable::Schema.down(self)
   end
 end
 ```
@@ -27,7 +27,7 @@ end
 
 ```ruby
 class User
-  devise :database_authenticatable, :oauth2_token_bearer_authenticatable
+  devise :oauth2_providable
 end
 ```
 
