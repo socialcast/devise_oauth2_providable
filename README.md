@@ -28,6 +28,7 @@ end
 ```ruby
 class User
   devise :database_authenticatable, :oauth2_token_bearer_authenticatable
+end
 ```
 
 ## Contributing
