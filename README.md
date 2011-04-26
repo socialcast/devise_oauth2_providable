@@ -4,6 +4,32 @@ Support OAuth2 authentication for your API.
 
 http://tools.ietf.org/html/draft-ietf-oauth-v2-15
 
+## Installation
+
+```ruby
+# Bundler Gemfile
+gem 'oauth2_token_bearer_authenticatable'
+```
+
+```ruby
+# create new Rails migration
+class CreateOauth2Schema < ActiveRecord::Migration
+  def self.up
+    Devise::Oauth2TokenBearerAuthenticatable::Schema.up(self)
+  end
+  def self.down
+    Devise::Oauth2TokenBearerAuthenticatable::Schema.down(self)
+  end
+end
+```
+
+## Usage
+
+```ruby
+class User
+  devise :database_authenticatable, :oauth2_token_bearer_authenticatable
+```
+
 ## Contributing
  
 * Fork the project
