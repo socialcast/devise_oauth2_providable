@@ -5,7 +5,8 @@ Rails3 engine that brings OAuth2 Provider support to your application.
 ## Features
 
 * integrates OAuth2 authentication with Devise authenthentication stack
-* 
+* one-stop-shop includes all Models, Controllers and Views to get up and
+  running quickly
 
 ## OAuth2
 Current Specification Draft:
