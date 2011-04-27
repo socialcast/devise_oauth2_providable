@@ -22,6 +22,8 @@ module Devise
         end
         migration.add_index :access_tokens, :token
         migration.add_index :access_tokens, :expires_at
+        migration.add_index :access_tokens, :user_id
+        migration.add_index :access_tokens, :client_id
 
         migration.create_table :refresh_tokens do |t|
           t.belongs_to :user, :client
@@ -31,6 +33,8 @@ module Devise
         end
         migration.add_index :refresh_tokens, :token
         migration.add_index :refresh_tokens, :expires_at
+        migration.add_index :refresh_tokens, :user_id
+        migration.add_index :refresh_tokens, :client_id
 
         migration.create_table :authorization_codes do |t|
           t.belongs_to :user, :client
@@ -41,6 +45,8 @@ module Devise
         end
         migration.add_index :authorization_codes, :token
         migration.add_index :authorization_codes, :expires_at
+        migration.add_index :authorization_codes, :user_id
+        migration.add_index :authorization_codes, :client_id
       end
 
       def self.down(migration)
