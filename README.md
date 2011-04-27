@@ -78,6 +78,8 @@ http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-2.1
 Endpoint to start client authorization flow.  Models, controllers and
 views are included for out of the box deployment.
 
+Supports the Authorization Code and Implicit grant types.
+
 ### /oauth2/token
 http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-2.2
 
@@ -92,6 +94,9 @@ http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.3
 in order to use the Resource Owner Password Credentials Grant Type, your
 Devise model *must* be configured to support the
 :database_authenticatable option
+
+### Authorization Code Grant Type
+http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.1
 
 ### Implicit Grant Type
 http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.2
