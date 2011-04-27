@@ -2,45 +2,14 @@
 
 Rails3 engine that brings OAuth2 Provider support to your application.
 
+Current OAuth2 Specification Draft:
+http://tools.ietf.org/html/draft-ietf-oauth-v2-15
+
 ## Features
 
 * integrates OAuth2 authentication with Devise authenthentication stack
 * one-stop-shop includes all Models, Controllers and Views to get up and
   running quickly
-
-## OAuth2
-Current Specification Draft:
-http://tools.ietf.org/html/draft-ietf-oauth-v2-15
-
-### /oauth2/authorize Endpoint
-http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-2.1
-
-Endpoint to start client authorization flow.  Models, controllers and
-views are included for out of the box deployment.
-
-### /oauth2/token Endpoint
-http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-2.2
-
-Endpoint to request access token.  All grant types should be supported.
-
-### Resource Owner Password Credentials Grant Type
-http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.3
-
-in order to use the Resource Owner Password Credentials Grant Type, your
-Devise model *must* be configured to support the
-:database_authenticatable option
-
-### Implicit Grant Type
-http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.2
-
-### Refresh Token Grant Type
-http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-6
-
-### Bearer Tokens
-http://tools.ietf.org/html/draft-ietf-oauth-v2-bearer-04
-
-All server requests support authentication via bearer token included in
-the request.
 
 ## Installation
 
@@ -67,6 +36,72 @@ class User
   devise :oauth2_providable
 end
 ```
+
+## Models
+
+### Client
+registered OAuth2 client for storing the unique client_id and
+client_secret.
+
+### AccessToken
+http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-1.3
+
+Short lived token used by clients to perform subsequent requests (see
+bearer token spec)
+
+expires after 15min by default.
+
+### RefreshToken
+http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-1.5
+
+Long lived token used by clients to request new access tokens without
+requiring user intervention to re-authorize.
+
+expires after 1 month by default.
+
+### AthorizationCode
+http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-1.4.1
+
+*Very* short lived token created to allow a client to request an access
+token after a user has gone through the authorization flow.
+
+expires after 1min by default.
+
+## Routes
+
+### /oauth2/authorize
+http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-2.1
+
+Endpoint to start client authorization flow.  Models, controllers and
+views are included for out of the box deployment.
+
+### /oauth2/token
+http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-2.2
+
+Endpoint to request access token.  See grant type documentation for
+supported flows.
+
+## Grant Types
+
+### Resource Owner Password Credentials Grant Type
+http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.3
+
+in order to use the Resource Owner Password Credentials Grant Type, your
+Devise model *must* be configured to support the
+:database_authenticatable option
+
+### Implicit Grant Type
+http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.2
+
+### Refresh Token Grant Type
+http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-6
+
+### Bearer Tokens
+http://tools.ietf.org/html/draft-ietf-oauth-v2-bearer-04
+
+All server requests support authentication via bearer token included in
+the request.
+
 
 ## Contributing
  
