@@ -10,6 +10,9 @@ http://tools.ietf.org/html/draft-ietf-oauth-v2-15
 * integrates OAuth2 authentication with Devise authenthentication stack
 * one-stop-shop includes all Models, Controllers and Views to get up and
   running quickly
+* All server requests support authentication via bearer token included in
+the request.  http://tools.ietf.org/html/draft-ietf-oauth-v2-bearer-04
+
 
 ## Installation
 
@@ -95,13 +98,6 @@ http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.2
 
 ### Refresh Token Grant Type
 http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-6
-
-### Bearer Tokens
-http://tools.ietf.org/html/draft-ietf-oauth-v2-bearer-04
-
-All server requests support authentication via bearer token included in
-the request.
-
 
 ## Contributing
  
