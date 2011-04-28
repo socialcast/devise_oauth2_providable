@@ -25,7 +25,7 @@ class TokenEndpoint
       when :refresh_token
         refresh_token = client.refresh_tokens.valid.find_by_token(req.refresh_token)
         req.invalid_grant! unless refresh_token
-        res.access_token = refresh_token.access_tokens.create.to_bearer_token
+        res.access_token = refresh_token.access_tokens.create(:client => client).to_bearer_token
       else
         # NOTE: extended assertion grant_types are not supported yet.
         req.unsupported_grant_type!
