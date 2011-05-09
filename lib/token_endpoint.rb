@@ -29,6 +29,7 @@ class TokenEndpoint
       return nil unless code.valid_request?(req)
       code.access_token.build
     when :password
+      return nil unless mapping.to.http_authenticatable? :database
       resource = mapping.to.find_for_authentication(mapping.to.authentication_keys.first => req.username)
       return nil unless resource
       valid = resource.valid_for_authentication? { resource.valid_password?(req.password) }
