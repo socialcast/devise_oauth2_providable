@@ -19,10 +19,11 @@ describe TokenEndpoint do
     it { response.code.to_i.should == 200 }
     it 'returns json' do
       token = AccessToken.last
+      refresh_token = RefreshToken.last
       expected = {
         :token_type => 'bearer',
         :expires_in => 899,
-        :refresh_token => token.refresh_token.token,
+        :refresh_token => refresh_token.token,
         :access_token => token.token
       }
         # "{\"token_type\":\"bearer\",\"expires_in\":899,\"refresh_token\":\"bzRiMusIUW5usXcm5h/1iw==\",\"access_token\":\"L/n1yMJiY0c3jxYhYyDdsA==\"}"

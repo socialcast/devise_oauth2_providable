@@ -15,7 +15,7 @@ module Devise
         migration.add_index :clients, :identifier
 
         migration.create_table :access_tokens do |t|
-          t.belongs_to :user, :client, :refresh_token
+          t.belongs_to :user, :client
           t.string :token
           t.datetime :expires_at
           t.timestamps

@@ -11,7 +11,6 @@ describe AccessToken do
     it { should belong_to :user }
     it { should belong_to :client }
     it { should validate_presence_of :client }
-    it { should belong_to :refresh_token }
     it { should validate_presence_of :expires_at }
   end
 end

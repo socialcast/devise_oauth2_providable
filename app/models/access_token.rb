@@ -3,7 +3,7 @@ require 'expirable_token'
 class AccessToken < ActiveRecord::Base
   include ExpirableToken
   self.default_lifetime = 15.minutes
-  belongs_to :refresh_token
+  attr_accessor :refresh_token
 
   def to_bearer_token(with_refresh_token = false)
     bearer_token = Rack::OAuth2::AccessToken::Bearer.new(
@@ -11,10 +11,8 @@ class AccessToken < ActiveRecord::Base
       :expires_in => self.expires_in
     )
     if with_refresh_token
-      bearer_token.refresh_token = self.create_refresh_token(
-        :user => self.user,
-        :client => self.client
-      ).token
+      refresh_token = client.refresh_tokens.create! :user => self.user
+      bearer_token.refresh_token = refresh_token.token
     end
     bearer_token
   end

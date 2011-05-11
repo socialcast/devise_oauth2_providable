@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(:version => 20110511210926) do
   create_table "access_tokens", :force => true do |t|
     t.integer  "user_id"
     t.integer  "client_id"
-    t.integer  "refresh_token_id"
     t.string   "token"
     t.datetime "expires_at"
     t.datetime "created_at"

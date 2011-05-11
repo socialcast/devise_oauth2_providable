@@ -7,5 +7,6 @@ describe Client do
     it { should validate_presence_of :website }
     it { should validate_presence_of :redirect_uri }
     it { should validate_uniqueness_of :identifier }
+    it { should have_many :refresh_tokens }
   end
 end
