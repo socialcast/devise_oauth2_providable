@@ -52,6 +52,7 @@ module Devise
       def self.down(migration)
         migration.drop_table :refresh_tokens
         migration.drop_table :access_tokens
+        migration.drop_table :authorization_codes
         migration.drop_table :clients
       end
     end

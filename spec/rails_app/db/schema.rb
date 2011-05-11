@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(:version => 20110511210926) do
   add_index "refresh_tokens", ["user_id"], :name => "index_refresh_tokens_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "email",                             :default => "", :null => false
+    t.string   "email"
     t.string   "encrypted_password", :limit => 128, :default => "", :null => false
     t.string   "name"
     t.datetime "created_at"
