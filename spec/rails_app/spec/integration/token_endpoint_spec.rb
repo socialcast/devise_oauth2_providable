@@ -16,7 +16,17 @@ describe TokenEndpoint do
 
       post '/oauth2/token', params
     end
-    it { response.code.should == 200 }
-    it { response.body.should == {}.to_json }
+    it { response.code.to_i.should == 200 }
+    it 'returns json' do
+      token = AccessToken.last
+      expected = {
+        :token_type => 'bearer',
+        :expires_in => 899,
+        :refresh_token => token.refresh_token.token,
+        :access_token => token.token
+      }
+        # "{\"token_type\":\"bearer\",\"expires_in\":899,\"refresh_token\":\"bzRiMusIUW5usXcm5h/1iw==\",\"access_token\":\"L/n1yMJiY0c3jxYhYyDdsA==\"}"
+      response.body.should == expected.to_json
+    end
   end
 end

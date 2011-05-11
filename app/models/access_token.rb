@@ -16,7 +16,6 @@ class AccessToken < ActiveRecord::Base
         :client => self.client
       ).token
     end
-    p bearer_token.token_response
     bearer_token
   end
 
