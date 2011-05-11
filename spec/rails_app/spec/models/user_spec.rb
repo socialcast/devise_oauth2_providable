@@ -1,5 +1,8 @@
 require 'spec_helper'
 
 describe User do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'basic user instance' do
+    before { @user = User.create :name => 'ryan sonnek' }
+    it { should have_many :access_tokens }
+  end
 end

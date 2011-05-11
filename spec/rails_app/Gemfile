@@ -3,6 +3,7 @@ source 'http://rubygems.org'
 gem 'rails', '3.0.7'
 gem 'rspec-rails', '2.5.0'
 gem 'devise_oauth2_providable', :path => '../../'
+gem 'shoulda-matchers', '1.0.0.beta2'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
