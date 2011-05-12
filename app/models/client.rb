@@ -9,7 +9,7 @@ class Client < ActiveRecord::Base
   private
 
   def setup
-    self.identifier = ActiveSupport::SecureRandom.base64(16)
-    self.secret = ActiveSupport::SecureRandom.base64
+    self.identifier = ActiveSupport::SecureRandom.base64(16).tr('+/', '-_').tr('=', '')
+    self.secret = ActiveSupport::SecureRandom.base64.tr('+/', '-_').tr('=', '')
   end
 end
