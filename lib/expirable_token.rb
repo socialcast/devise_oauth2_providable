@@ -30,7 +30,7 @@ module ExpirableToken
   private
 
   def setup
-    self.token = ActiveSupport::SecureRandom.base64(16)
+    self.token = ActiveSupport::SecureRandom.urlsafe_base64(16)
     self.expires_at ||= self.default_lifetime.from_now
   end
 end
