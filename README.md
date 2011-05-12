@@ -62,7 +62,7 @@ requiring user intervention to re-authorize.
 
 expires after 1 month by default.
 
-### AthorizationCode
+### AuthorizationCode
 http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-1.4.1
 
 *Very* short lived token created to allow a client to request an access
