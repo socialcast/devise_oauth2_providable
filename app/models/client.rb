@@ -10,9 +10,9 @@ class Client < ActiveRecord::Base
   private
 
   def init_identifier
-    self.identifier = ActiveSupport::SecureRandom.base64(16)
+    self.identifier = Devise::Oauth2Providable.random_id
   end
   def init_secret
-    self.secret = ActiveSupport::SecureRandom.base64
+    self.secret = Devise::Oauth2Providable.random_id
   end
 end

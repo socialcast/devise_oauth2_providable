@@ -7,8 +7,11 @@ require 'devise_oauth2_providable/engine'
 
 module Devise
   module Oauth2Providable
-  # Your code goes here...
-    
+    class << self
+      def random_id
+        ActiveSupport::SecureRandom.hex
+      end
+    end
   end
 end
 

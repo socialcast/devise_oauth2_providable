@@ -12,6 +12,20 @@ describe AccessToken do
     it { should belong_to :client }
     it { should validate_presence_of :client }
     it { should validate_presence_of :expires_at }
+    it { should allow_mass_assignment_of :refresh_token }
+  end
+
+  describe 'refresh token expires before access token expires_at' do
+    before do
+      @soon = 1.minute.from_now
+      client = Client.create! :name => 'test', :redirect_uri => 'http://localhost:3000', :website => 'http://localhost'
+      @refresh_token = client.refresh_tokens.create!
+      @refresh_token.expires_at = @soon
+      @access_token = AccessToken.create! :client => client, :refresh_token => @refresh_token
+    end
+    it 'should set the access token expires_at to equal refresh token' do
+      @access_token.expires_at.should eq @soon
+    end
   end
 end
 

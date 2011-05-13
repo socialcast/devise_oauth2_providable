@@ -40,7 +40,7 @@ class TokenEndpoint
     when :refresh_token
       refresh_token = client.refresh_tokens.valid.find_by_token(req.refresh_token)
       return nil unless refresh_token.present?
-      refresh_token.access_tokens.build(:client => client, :user => refresh_token.user)
+      refresh_token.access_tokens.build(:client => client, :user => refresh_token.user, :refresh_token => refresh_token)
     else
       nil
     end
