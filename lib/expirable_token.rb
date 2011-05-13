@@ -7,7 +7,8 @@ module ExpirableToken
       belongs_to :user
       belongs_to :client
 
-      before_validation :setup, :on => :create
+      before_validation :init_token, :on => :create, :unless => :token?
+      before_validation :init_expires_at, :on => :create, :unless => :expires_at?
       validates :client, :expires_at, :presence => true
       validates :token, :presence => true, :uniqueness => true
 
@@ -29,9 +30,11 @@ module ExpirableToken
 
   private
 
-  def setup
+  def init_token
     self.token = ActiveSupport::SecureRandom.base64(16)
-    self.expires_at ||= self.default_lifetime.from_now
+  end
+  def init_expires_at
+    self.expires_at = self.default_lifetime.from_now
   end
 end
 
