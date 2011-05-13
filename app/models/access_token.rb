@@ -5,15 +5,11 @@ class AccessToken < ActiveRecord::Base
   self.default_lifetime = 15.minutes
 
   before_validation :restrict_expires_at, :if => :refresh_token
-  attr_accessor :refresh_token
+  belongs_to :refresh_token
 
-  def to_bearer_token(with_refresh_token = false)
-    bearer_token = Rack::OAuth2::AccessToken::Bearer.new(
-      :access_token => self.token,
-      :expires_in => self.expires_in
-    )
-    if with_refresh_token
-      refresh_token = client.refresh_tokens.create! :user => self.user
+  def to_bearer_token
+    bearer_token = Rack::OAuth2::AccessToken::Bearer.new :access_token => self.token, :expires_in => self.expires_in
+    if refresh_token
       bearer_token.refresh_token = refresh_token.token
     end
     bearer_token

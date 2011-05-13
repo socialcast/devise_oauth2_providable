@@ -11,10 +11,9 @@ class TokenEndpoint
       client = Client.find_by_identifier(req.client_id) || req.invalid_client!
       client.secret == req.client_secret || req.invalid_client!
 
-      token = access_token(req, client)
-      if token && token.save
-        include_bearer_token = [:authorization_code, :password].include?(req.grant_type) ? :with_refresh_token : false
-        res.access_token = token.to_bearer_token include_bearer_token
+      refresh_token = refresh_token(req, client)
+      if refresh_token && token = refresh_token.access_tokens.create(:client => client, :user => refresh_token.user)
+        res.access_token = token.to_bearer_token
       else
         req.invalid_grant!
       end
@@ -22,25 +21,23 @@ class TokenEndpoint
   end
 
   # NOTE: extended assertion grant_types are not supported yet.
-  def access_token(req, client)
+  # NOTE: client_credentials grant_types are not yet supported
+  def refresh_token(req, client)
     case req.grant_type
     when :authorization_code
       code = AuthorizationCode.valid.find_by_token(req.code)
       return nil unless code.valid_request?(req)
-      code.access_token.build
+      client.refresh_tokens.create! :user => code.user
     when :password
       resource = mapping.to.find_for_authentication(mapping.to.authentication_keys.first => req.username)
       return nil unless resource && resource.respond_to?(:valid_password?)
       valid = resource.valid_for_authentication? { resource.valid_password?(req.password) }
       return nil unless valid.is_a?(TrueClass)
-      resource.access_tokens.build(:client => client)
-    when :client_credentials
-      # NOTE: client is already authenticated here.
-      client.access_tokens.build
+      client.refresh_tokens.create! :user => resource
     when :refresh_token
       refresh_token = client.refresh_tokens.valid.find_by_token(req.refresh_token)
       return nil unless refresh_token.present?
-      refresh_token.access_tokens.build(:client => client, :user => refresh_token.user, :refresh_token => refresh_token)
+      refresh_token
     else
       nil
     end

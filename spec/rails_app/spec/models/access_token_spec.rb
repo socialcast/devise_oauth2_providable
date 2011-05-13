@@ -12,6 +12,7 @@ describe AccessToken do
     it { should belong_to :client }
     it { should validate_presence_of :client }
     it { should validate_presence_of :expires_at }
+    it { should belong_to :refresh_token }
     it { should allow_mass_assignment_of :refresh_token }
   end
 

@@ -92,8 +92,10 @@ supported flows.
 http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.3
 
 in order to use the Resource Owner Password Credentials Grant Type, your
-Devise model *must* be configured to support the
-:database_authenticatable option
+Devise model *must* be configured with the :database_authenticatable option
+
+### Client Credentials Grant Type
+http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.4
 
 ### Authorization Code Grant Type
 http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.1
