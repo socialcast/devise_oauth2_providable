@@ -1,6 +1,35 @@
 require 'spec_helper'
 
 describe TokenEndpoint do
+  describe 'refresh_token grant type' do
+    context 'with valid params' do
+      before do
+        @user = User.create! :email => 'ryan@socialcast.com', :name => 'ryan sonnek', :password => 'test'
+        @client = Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
+        @refresh_token = @client.refresh_tokens.create! :user => @user
+        params = {
+          :grant_type => 'refresh_token',
+          :client_id => @client.identifier,
+          :client_secret => @client.secret,
+          :refresh_token => @refresh_token.token
+        }
+
+        post '/oauth2/token', params
+      end
+      it { response.code.to_i.should == 200 }
+      it 'returns json' do
+        token = AccessToken.last
+        refresh_token = @refresh_token
+        expected = {
+          :token_type => 'bearer',
+          :expires_in => 899,
+          :refresh_token => refresh_token.token,
+          :access_token => token.token
+        }
+        response.body.should == expected.to_json
+      end
+    end
+  end
   describe 'password grant type' do
     context 'with valid params' do
       before do
@@ -30,7 +59,6 @@ describe TokenEndpoint do
         response.body.should == expected.to_json
       end
     end
-
     context 'with invalid params' do
       before do
         @user = User.create! :email => 'ryan@socialcast.com', :name => 'ryan sonnek', :password => 'test'
