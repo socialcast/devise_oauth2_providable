@@ -8,18 +8,20 @@ class TokenEndpoint
 
   def authenticator
     Rack::OAuth2::Server::Token.new do |req, res|
-      client = Client.find_by_identifier(req.client_id) || req.invalid_client!
-      client.secret == req.client_secret || req.invalid_client!
-
+      client = Client.find_by_identifier(req.client_id)
+      req.invalid_client! unless client && client.secret == req.client_secret
       begin
-        refresh_token = find_refresh_token(req, client)
-        access_token = refresh_token.access_tokens.create!(:client => client, :user => refresh_token.user)
-        res.access_token = access_token.to_bearer_token
+        res.access_token = access_token(req, client).to_bearer_token
       rescue => e
         puts e.inspect
         req.invalid_grant!
       end
     end
+  end
+
+  def access_token(req, client)
+    refresh_token = find_refresh_token(req, client)
+    refresh_token.access_tokens.create!(:client => client, :user => refresh_token.user)
   end
 
   # NOTE: extended assertion grant_types are not supported yet.
