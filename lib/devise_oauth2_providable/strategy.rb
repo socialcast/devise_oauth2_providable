@@ -8,9 +8,12 @@ module Devise
       end
       def authenticate!
         token = AccessToken.valid.find_by_token env[Rack::OAuth2::Server::Resource::ACCESS_TOKEN]
-        raise Rack::OAuth2::Server::Resource::Bearer::Unauthorized unless token
-        raise Rack::OAuth2::Server::Resource::Bearer::Unauthorized.new(:invalid_token, 'User token is required') unless token.user
-        success! token.user
+        resource = token.user
+        if validate(resource)
+          success! resource
+        elsif !halted?
+          fail(:invalid_token)
+        end
       end
     end
   end
