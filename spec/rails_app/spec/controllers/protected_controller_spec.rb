@@ -8,7 +8,7 @@ describe ProtectedController do
       @user = User.create! :name => 'ryan sonnek', :email => 'foo@example.com'
       @token = AccessToken.create! :client => client, :user => @user
 
-      get :index, {}, {'Authorization' => "Bearer #{@token.token}"}
+      get :index, {:bearer_token => @token.token}, {'HTTP_AUTHORIZATION' => "Bearer #{@token.token}"}
     end
     it { should respond_with :ok }
   end
