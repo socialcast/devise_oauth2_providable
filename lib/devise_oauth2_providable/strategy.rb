@@ -8,9 +8,8 @@ module Devise
         @req.oauth2?
       end
       def authenticate!
-        token = [@req.access_token_in_header, @req.access_token_in_payload].compact
-        access_token = AccessToken.valid.find_by_token token
-        resource = access_token ? access_token.user : nil
+        token = AccessToken.valid.find_by_token access_token
+        resource = token ? token.user : nil
         if validate(resource)
           success! resource
         elsif !halted?
@@ -19,6 +18,11 @@ module Devise
       end
 
       private
+      def access_token
+        tokens = [@req.access_token_in_header, @req.access_token_in_payload].compact
+        raise 'invalid request: access token exists in header and payload' if tokens.size > 1
+        tokens.first
+      end
       # Simply invokes valid_for_authentication? with the given block and deal with the result.
       def validate(resource, &block)
         result = resource && resource.valid_for_authentication?(&block)
