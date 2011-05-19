@@ -12,7 +12,7 @@ module Devise
           t.string :secret
           t.timestamps
         end
-        migration.add_index :clients, :identifier
+        migration.add_index :clients, :identifier, :unique => true
 
         migration.create_table :access_tokens do |t|
           t.belongs_to :user, :client, :refresh_token
@@ -20,7 +20,7 @@ module Devise
           t.datetime :expires_at
           t.timestamps
         end
-        migration.add_index :access_tokens, :token
+        migration.add_index :access_tokens, :token, :unique => true
         migration.add_index :access_tokens, :expires_at
         migration.add_index :access_tokens, :user_id
         migration.add_index :access_tokens, :client_id
@@ -31,7 +31,7 @@ module Devise
           t.datetime :expires_at
           t.timestamps
         end
-        migration.add_index :refresh_tokens, :token
+        migration.add_index :refresh_tokens, :token, :unique => true
         migration.add_index :refresh_tokens, :expires_at
         migration.add_index :refresh_tokens, :user_id
         migration.add_index :refresh_tokens, :client_id
@@ -43,7 +43,7 @@ module Devise
           t.string :redirect_uri
           t.timestamps
         end
-        migration.add_index :authorization_codes, :token
+        migration.add_index :authorization_codes, :token, :unique => true
         migration.add_index :authorization_codes, :expires_at
         migration.add_index :authorization_codes, :user_id
         migration.add_index :authorization_codes, :client_id
