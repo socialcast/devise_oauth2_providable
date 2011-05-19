@@ -12,7 +12,7 @@ module Devise
           t.string :secret
           t.timestamps
         end
-        migration.add_index :clients, :identifier
+        migration.add_index :clients, :identifier, :unique => true
 
         migration.create_table :access_tokens do |t|
           t.belongs_to :user, :client, :refresh_token
