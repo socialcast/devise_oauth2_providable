@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(:version => 20110511210926) do
 
   add_index "access_tokens", ["client_id"], :name => "index_access_tokens_on_client_id"
   add_index "access_tokens", ["expires_at"], :name => "index_access_tokens_on_expires_at"
-  add_index "access_tokens", ["token"], :name => "index_access_tokens_on_token"
+  add_index "access_tokens", ["token"], :name => "index_access_tokens_on_token", :unique => true
   add_index "access_tokens", ["user_id"], :name => "index_access_tokens_on_user_id"
 
   create_table "authorization_codes", :force => true do |t|
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(:version => 20110511210926) do
 
   add_index "authorization_codes", ["client_id"], :name => "index_authorization_codes_on_client_id"
   add_index "authorization_codes", ["expires_at"], :name => "index_authorization_codes_on_expires_at"
-  add_index "authorization_codes", ["token"], :name => "index_authorization_codes_on_token"
+  add_index "authorization_codes", ["token"], :name => "index_authorization_codes_on_token", :unique => true
   add_index "authorization_codes", ["user_id"], :name => "index_authorization_codes_on_user_id"
 
   create_table "clients", :force => true do |t|
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(:version => 20110511210926) do
     t.datetime "updated_at"
   end
 
-  add_index "clients", ["identifier"], :name => "index_clients_on_identifier"
+  add_index "clients", ["identifier"], :name => "index_clients_on_identifier", :unique => true
 
   create_table "refresh_tokens", :force => true do |t|
     t.integer  "user_id"
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(:version => 20110511210926) do
 
   add_index "refresh_tokens", ["client_id"], :name => "index_refresh_tokens_on_client_id"
   add_index "refresh_tokens", ["expires_at"], :name => "index_refresh_tokens_on_expires_at"
-  add_index "refresh_tokens", ["token"], :name => "index_refresh_tokens_on_token"
+  add_index "refresh_tokens", ["token"], :name => "index_refresh_tokens_on_token", :unique => true
   add_index "refresh_tokens", ["user_id"], :name => "index_refresh_tokens_on_user_id"
 
   create_table "users", :force => true do |t|

@@ -16,7 +16,7 @@ describe AccessToken do
     it { should allow_mass_assignment_of :refresh_token }
     it { should have_db_index :client_id }
     it { should have_db_index :user_id }
-    it { should have_db_index :token }
+    it { should have_db_index(:token).unique(true) }
     it { should have_db_index :expires_at }
   end
 

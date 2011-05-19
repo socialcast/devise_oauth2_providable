@@ -15,6 +15,13 @@ describe ProtectedController do
       end
       it { should respond_with :ok }
     end
+    context 'with valid bearer token in query string' do
+      before do
+        get :index, :bearer_token => @token.token, :format => 'json'
+      end
+      it { should respond_with :ok }
+    end
+
     context 'with invalid bearer token in query param' do
       before do
         get :index, :bearer_token => 'invalid', :format => 'json'
@@ -23,10 +30,13 @@ describe ProtectedController do
     end
     context 'with valid bearer token in header and query string' do
       before do
-        @request.env['HTTP_AUTHORIZATION'] = "Bearer #{@token.token}"
-        get :index, :bearer_token => @token.token, :format => 'json'
       end
-      it { should respond_with :unauthorized }
+      it 'raises error' do
+        lambda {
+          @request.env['HTTP_AUTHORIZATION'] = "Bearer #{@token.token}"
+          get :index, :bearer_token => @token.token, :format => 'json'
+        }.should raise_error
+      end
     end
   end
 end
