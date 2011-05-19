@@ -3,7 +3,7 @@ require 'expirable_token'
 class AuthorizationCode < ActiveRecord::Base
   include ExpirableToken
 
-  validate :token, :uniqueness => true
+  validates :token, :uniqueness => true
 
   def access_token
     @access_token ||= expired! && user.access_tokens.create(:client => client)
