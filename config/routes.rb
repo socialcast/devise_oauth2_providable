@@ -1,5 +1,5 @@
 require 'token_endpoint'
-Rails.application.routes.draw do |map|
+Rails.application.routes.draw do
   namespace 'oauth2' do
     resources :authorizations, :only => :create
   end
