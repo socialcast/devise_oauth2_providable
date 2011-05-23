@@ -26,7 +26,7 @@ describe TokenEndpoint do
           :refresh_token => refresh_token.token,
           :access_token => token.token
         }
-        response.body.should == expected.to_json
+        JSON.parse(response.body).should == JSON.parse(expected.to_json)
       end
     end
   end
@@ -56,7 +56,7 @@ describe TokenEndpoint do
           :refresh_token => refresh_token.token,
           :access_token => token.token
         }
-        response.body.should == expected.to_json
+        JSON.parse(response.body).should == JSON.parse(expected.to_json)
       end
     end
     context 'with invalid params' do
