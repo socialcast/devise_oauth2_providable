@@ -4,6 +4,7 @@ require 'devise_oauth2_providable/strategy'
 require 'devise_oauth2_providable/model'
 require 'devise_oauth2_providable/schema'
 require 'devise_oauth2_providable/engine'
+require 'devise_oauth2_providable/strategies/oauth2_password_grant_type_strategy'
 
 module Devise
   module Oauth2Providable
@@ -18,4 +19,3 @@ end
 Devise.add_module(:oauth2_providable,
   :strategy => true,
   :model => 'devise_oauth2_providable/model')
-

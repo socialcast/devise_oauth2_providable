@@ -2,7 +2,7 @@ require 'devise/strategies/base'
 
 module Devise
   module Strategies
-    class Oauth2Providable < Base
+    class Oauth2Providable < Authenticatable
       def valid?
         @req = Rack::OAuth2::Server::Resource::Bearer::Request.new(env)
         @req.oauth2?
@@ -15,22 +15,6 @@ module Devise
           success! resource
         elsif !halted?
           fail(:invalid_token)
-        end
-      end
-
-      private
-      # Simply invokes valid_for_authentication? with the given block and deal with the result.
-      def validate(resource, &block)
-        result = resource && resource.valid_for_authentication?(&block)
-
-        case result
-        when String, Symbol
-          fail!(result)
-          false
-        when TrueClass
-          true
-        else
-          result
         end
       end
     end
