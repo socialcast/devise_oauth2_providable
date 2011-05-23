@@ -33,7 +33,12 @@ class TokenEndpoint
       raise InvalidGrantType.new('invalid authorization code') unless code && code.valid_request?(req)
       client.refresh_tokens.create! :user => code.user
     when :password
-      resource = mapping.to.find_for_authentication(mapping.to.authentication_keys.first => req.username)
+      conditions = Hash.new
+      mapping.to.authentication_keys.each do |key|
+        conditions[key] = req.env["rack.request.form_hash"][key.to_s]
+      end
+      conditions[:email] = req.username
+      resource = mapping.to.find_for_authentication(conditions)
       raise InvalidGrantType.new('user not found') unless resource
       raise InvalidGrantType.new('user does not support password authentication') unless resource.respond_to?(:valid_password?)
       valid = resource.valid_for_authentication? { resource.valid_password?(req.password) }
