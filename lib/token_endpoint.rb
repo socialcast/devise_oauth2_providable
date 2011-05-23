@@ -37,7 +37,7 @@ class TokenEndpoint
       mapping.to.authentication_keys.each do |key|
         conditions[key] = req.env["rack.request.form_hash"][key.to_s]
       end
-      conditions[:email] = req.username
+      conditions[mapping.to.authentication_keys.first] = req.username
       resource = mapping.to.find_for_authentication(conditions)
       raise InvalidGrantType.new('user not found') unless resource
       raise InvalidGrantType.new('user does not support password authentication') unless resource.respond_to?(:valid_password?)
