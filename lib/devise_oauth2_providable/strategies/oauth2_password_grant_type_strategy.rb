@@ -2,15 +2,31 @@ require 'devise/strategies/base'
 
 module Devise
   module Strategies
-    class Oauth2PasswordGrantTypeStrategy < Authenticatable
+    class GrantTypeStrategy < Authenticatable
       def valid?
-        params[:controller] == 'oauth2/tokens' && request.post? && params[:grant_type] == 'password'
+        params[:controller] == 'oauth2/tokens' && request.post? && params[:grant_type] == self.grant_type
+      end
+
+      # defined by subclass
+      def grant_type
+      end
+
+      def client
+        @client ||= Client.find_by_identifier params[:client_id]
+      end
+    end
+  end
+end
+module Devise
+  module Strategies
+    class Oauth2PasswordGrantTypeStrategy < GrantTypeStrategy
+      def grant_type
+        'password'
       end
 
       def authenticate!
-        client = Client.find_by_identifier params[:client_id]
         resource = mapping.to.find_for_authentication(mapping.to.authentication_keys.first => params[:username])
-        if validate(resource) { resource.valid_password?(params[:password]) }
+        if client && validate(resource) { resource.valid_password?(params[:password]) }
           success! resource
         elsif !halted?
           fail(:invalid_password_grant)
