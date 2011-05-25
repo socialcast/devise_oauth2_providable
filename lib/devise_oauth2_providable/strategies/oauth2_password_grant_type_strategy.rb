@@ -9,11 +9,8 @@ module Devise
 
       def authenticate!
         client = Client.find_by_identifier params[:client_id]
-        puts client.inspect
         resource = mapping.to.find_for_authentication(mapping.to.authentication_keys.first => params[:username])
-        puts resource.inspect
         if validate(resource) { resource.valid_password?(params[:password]) }
-          puts 'success'
           success! resource
         elsif !halted?
           fail(:invalid_password_grant)

@@ -7,12 +7,14 @@ class AccessToken < ActiveRecord::Base
   before_validation :restrict_expires_at, :if => :refresh_token
   belongs_to :refresh_token
 
-  def to_bearer_token
-    bearer_token = Rack::OAuth2::AccessToken::Bearer.new :access_token => self.token, :expires_in => self.expires_in
-    if refresh_token
-      bearer_token.refresh_token = refresh_token.token
-    end
-    bearer_token
+  def token_response
+    response = {
+      :access_token => token,
+      :token_type => 'bearer',
+      :expires_in => expires_in
+    }
+    response.merge!(:refresh_token => refresh_token.token) if refresh_token
+    response
   end
 
   private

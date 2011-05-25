@@ -49,19 +49,11 @@ describe Oauth2::TokensController do
 
           post '/oauth2/token', params
         end
-        it { should respond_with :ok }
-        it { should respond_with_content_type :json }
-        it { should assign_to(:access_token) }
+        it { response.code.to_i.should == 200 }
+        it { response.content_type.should == 'application/json' }
         it 'returns json' do
-          # token = assigns(:access_token)
-          # refresh_token = token.refresh_token
-          # expected = {
-          #   :token_type => 'bearer',
-          #   :expires_in => 899,
-          #   :refresh_token => refresh_token.token,
-          #   :access_token => token.token
-          # }
-          expected = {}
+          token = AccessToken.last
+          expected = token.token_response
           response.body.should == expected.to_json
         end
       end
@@ -80,8 +72,8 @@ describe Oauth2::TokensController do
 
           post '/oauth2/token', params
         end
-        it { should respond_with 400 }
-        it { should respond_with_content_type :json }
+        it { response.code.to_i.should == 400 }
+        it { response.content_type.should == 'application/json'  }
         it 'returns json' do
           expected = {
             :error_description => "The provided access grant is invalid, expired, or revoked (e.g. invalid assertion, expired authorization token, bad end-user password credentials, or mismatching authorization code and redirection URI).",
