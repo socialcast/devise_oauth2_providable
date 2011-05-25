@@ -9,7 +9,7 @@ module Devise
         if client && refresh_token = client.refresh_tokens.valid.find_by_token(params[:refresh_token])
           success! refresh_token.user
         elsif !halted?
-          fail(:invalid_refresh_token)
+          custom! [400, {'WWW-Authenticate' => 'realm=foo', 'Content-Type' => 'application/json'}, [{:error => 'bad'}.to_json]]
         end
       end
     end
