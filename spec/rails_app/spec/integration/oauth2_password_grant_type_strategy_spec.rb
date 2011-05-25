@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Oauth2::TokensController do
+describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
   describe 'POST /oauth2/token' do
     # describe 'with grant_type=refresh_token' do
     #   context 'with valid params' do
