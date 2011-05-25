@@ -45,7 +45,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
         it { response.content_type.should == 'application/json'  }
         it 'returns json' do
           expected = {
-            :error_description => "The provided access grant is invalid, expired, or revoked (e.g. invalid assertion, expired authorization token, bad end-user password credentials, or mismatching authorization code and redirection URI).",
+            :error_description => "invalid password authentication request",
             :error => "invalid_grant"
           }
           response.body.should == expected.to_json
@@ -69,7 +69,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
         it { response.content_type.should == 'application/json'  }
         it 'returns json' do
           expected = {
-            :error_description => "The provided access grant is invalid, expired, or revoked (e.g. invalid assertion, expired authorization token, bad end-user password credentials, or mismatching authorization code and redirection URI).",
+            :error_description => "invalid password authentication request",
             :error => "invalid_grant"
           }
           response.body.should == expected.to_json

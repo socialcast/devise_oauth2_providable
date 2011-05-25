@@ -12,7 +12,7 @@ module Devise
         if client && validate(resource) { resource.valid_password?(params[:password]) }
           success! resource
         elsif !halted?
-          fail(:invalid_password_grant)
+          oauth_error! :invalid_grant, 'invalid password authentication request'
         end
       end
     end

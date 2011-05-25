@@ -9,10 +9,10 @@ module Devise
         if client && refresh_token = client.refresh_tokens.valid.find_by_token(params[:refresh_token])
           success! refresh_token.user
         elsif !halted?
-          custom! [400, {'WWW-Authenticate' => 'realm=foo', 'Content-Type' => 'application/json'}, [{:error => 'bad'}.to_json]]
+          oauth_error! :invalid_grant, 'invalid refresh token'
         end
       end
     end
   end
 end
-Warden::Strategies.add(:oauth2_password_grant_type, Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy)
+Warden::Strategies.add(:oauth2_refresh_token_grant_type, Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy)
