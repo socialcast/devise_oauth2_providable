@@ -13,7 +13,7 @@ class AccessToken < ActiveRecord::Base
       :token_type => 'bearer',
       :expires_in => expires_in
     }
-    response.merge!(:refresh_token => refresh_token.token) if refresh_token
+    response[:refresh_token] = refresh_token.token if refresh_token
     response
   end
 
