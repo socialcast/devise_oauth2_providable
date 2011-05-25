@@ -7,6 +7,7 @@ module Devise
         params[:controller] == 'oauth2/tokens' && request.post? && params[:grant_type] == self.grant_type
       end
 
+      protected
       # defined by subclass
       def grant_type
       end
