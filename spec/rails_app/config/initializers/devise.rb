@@ -194,6 +194,6 @@ Devise.setup do |config|
 
   config.warden do |manager|
     manager.default_strategies(:scope => :user).unshift :oauth2_password_grant_type
+    manager.default_strategies(:scope => :user).unshift :oauth2_refresh_token_grant_type
   end
-
 end

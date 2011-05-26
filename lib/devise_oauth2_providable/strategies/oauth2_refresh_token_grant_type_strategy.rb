@@ -1,3 +1,5 @@
+require 'devise_oauth2_providable/strategies/oauth2_grant_type_strategy'
+
 module Devise
   module Strategies
     class Oauth2RefreshTokenGrantTypeStrategy < Oauth2GrantTypeStrategy
@@ -15,4 +17,5 @@ module Devise
     end
   end
 end
+
 Warden::Strategies.add(:oauth2_refresh_token_grant_type, Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy)

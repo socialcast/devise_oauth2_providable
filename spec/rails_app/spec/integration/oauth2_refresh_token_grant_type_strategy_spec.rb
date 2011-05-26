@@ -51,13 +51,12 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy do
           token = AccessToken.last
           refresh_token = @refresh_token
           expected = {
-            :error => 'invalid_request',
-            :description => 'invalid refresh token'
+            :error => 'invalid_grant',
+            :error_description => 'invalid refresh token'
           }
           response.body.should == expected.to_json
         end
       end
-
     end
   end
 end

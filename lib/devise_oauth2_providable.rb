@@ -4,7 +4,6 @@ require 'devise_oauth2_providable/strategy'
 require 'devise_oauth2_providable/model'
 require 'devise_oauth2_providable/schema'
 require 'devise_oauth2_providable/engine'
-require 'devise_oauth2_providable/strategies/oauth2_grant_type_strategy'
 require 'devise_oauth2_providable/strategies/oauth2_password_grant_type_strategy'
 require 'devise_oauth2_providable/strategies/oauth2_refresh_token_grant_type_strategy'
 
