@@ -10,6 +10,7 @@ module Devise
       def authenticate!
         @req.setup!
         token = AccessToken.valid.find_by_token @req.access_token
+        env['oauth2.client'] = token ? token.client : nil
         resource = token ? token.user : nil
         if validate(resource)
           success! resource
