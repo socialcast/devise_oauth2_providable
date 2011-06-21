@@ -36,7 +36,9 @@ end
 class User
   # NOTE: include :database_authenticatable configuration
   # if supporting Resource Owner Password Credentials Grant Type
-  devise :oauth2_providable
+  devise :oauth2_providable, 
+    :oauth2_password_grantable,
+    :oauth2_refresh_token_grantable
 end
 ```
 
