@@ -19,4 +19,4 @@ module Devise
   end
 end
 
-Warden::Strategies.add(:oauth2_password_grant_type, Devise::Strategies::Oauth2PasswordGrantTypeStrategy)
+Warden::Strategies.add(:oauth2_password_grantable, Devise::Strategies::Oauth2PasswordGrantTypeStrategy)

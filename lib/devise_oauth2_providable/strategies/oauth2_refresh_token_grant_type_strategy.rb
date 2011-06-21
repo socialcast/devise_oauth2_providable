@@ -18,4 +18,4 @@ module Devise
   end
 end
 
-Warden::Strategies.add(:oauth2_refresh_token_grant_type, Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy)
+Warden::Strategies.add(:oauth2_refresh_token_grantable, Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy)
