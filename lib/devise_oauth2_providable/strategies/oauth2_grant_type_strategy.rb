@@ -13,6 +13,8 @@ module Devise
 
       def client
         @client ||= Client.find_by_identifier params[:client_id]
+        env['oauth2.client'] = @client
+        @client
       end
       # return custom error response in accordance with the oauth spec
       # see http://tools.ietf.org/html/draft-ietf-oauth-v2-16#section-4.3

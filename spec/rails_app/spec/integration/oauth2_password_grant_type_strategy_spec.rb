@@ -23,7 +23,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
         it 'returns json' do
           token = AccessToken.last
           expected = token.token_response
-          response.body.should == expected.to_json
+          response.body.should match_json(expected)
         end
       end
       context 'with invalid params' do
@@ -48,7 +48,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
             :error_description => "invalid password authentication request",
             :error => "invalid_grant"
           }
-          response.body.should == expected.to_json
+          response.body.should match_json(expected)
         end
       end
       context 'with invalid client' do
@@ -72,7 +72,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
             :error_description => "invalid password authentication request",
             :error => "invalid_grant"
           }
-          response.body.should == expected.to_json
+          response.body.should match_json(expected)
         end
       end
     end

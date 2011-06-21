@@ -7,6 +7,13 @@ require 'rspec/rails'
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+# "{'foo': 'bar'}".should match_json {:foo => :bar}
+RSpec::Matchers.define :match_json do |expected|
+  match do |actual|
+    ActiveSupport::JSON.backend.decode(actual) == ActiveSupport::JSON.backend.decode(expected.to_json)
+  end
+end
+
 RSpec.configure do |config|
   config.include Devise::TestHelpers, :type => :controller
 

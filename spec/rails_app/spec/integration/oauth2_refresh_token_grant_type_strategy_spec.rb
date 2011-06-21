@@ -28,7 +28,7 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy do
             :refresh_token => refresh_token.token,
             :access_token => token.token
           }
-          response.body.should == expected.to_json
+          response.body.should match_json(expected)
         end
       end
       context 'with invalid refresh_token' do
@@ -54,7 +54,7 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy do
             :error => 'invalid_grant',
             :error_description => 'invalid refresh token'
           }
-          response.body.should == expected.to_json
+          response.body.should match_json(expected)
         end
       end
     end
