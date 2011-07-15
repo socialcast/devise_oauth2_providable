@@ -1,9 +1,8 @@
 require 'token_endpoint'
 Rails.application.routes.draw do |map|
-  namespace 'oauth2' do
-    resources :authorizations, :only => :create
-    resource :token, :only => :create
+  scope '/oauth2', :name_prefix => 'oauth2' do
+    resources :authorizations, :controller => 'oauth2/authorizations', :only => :create
+    resource :token, :controller => 'oauth2/tokens', :only => :create
+    match 'authorize' => 'oauth2/authorizations#new'
   end
-
-  match 'oauth2/authorize' => 'oauth2/authorizations#new'
 end
