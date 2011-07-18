@@ -38,7 +38,7 @@ class Oauth2::AuthorizationsController < ApplicationController
             authorization_code = current_user.authorization_codes.create(:client_id => @client, :redirect_uri => @redirect_uri)
             res.code = authorization_code.token
           when :token
-            res.access_token = current_user.access_tokens.create(:client_id => @client).to_bearer_token
+            res.access_token = current_user.access_tokens.create(:client_id => @client)
           end
           res.approve!
         else
