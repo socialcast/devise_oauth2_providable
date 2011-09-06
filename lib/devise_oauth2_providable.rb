@@ -15,7 +15,7 @@ module Devise
   module Oauth2Providable
     class << self
       def random_id
-        ActiveSupport::SecureRandom.hex
+        SecureRandom.hex
       end
     end
   end
