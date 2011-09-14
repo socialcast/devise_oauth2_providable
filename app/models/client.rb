@@ -1,12 +1,21 @@
-class Client < ActiveRecord::Base
-  has_many :access_tokens
-  has_many :refresh_tokens
+class Client
+  include Mongoid::Document
+  embeds_many :access_tokens
+  embeds_many :refresh_tokens
 
-  before_validation :init_identifier, :on => :create, :unless => :identifier?
   before_validation :init_secret, :on => :create, :unless => :secret?
-  validates :name, :website, :redirect_uri, :secret, :presence => true
-  validates :identifier, :presence => true, :uniqueness => true
-
+  
+  validates_presence_of :name, :website, :redirect_uri, :secret
+  
+  field :name
+  field :redirect_uri
+  field :website
+  field :secret
+  
+  def Client.find_by_identifier(id)
+    Client.first(:conditions => {:id => id})
+  end
+    
   private
 
   def init_identifier
