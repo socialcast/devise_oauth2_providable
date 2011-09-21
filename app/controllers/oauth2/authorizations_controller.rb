@@ -36,8 +36,6 @@ class Oauth2::AuthorizationsController < ApplicationController
           case req.response_type
           when :code
             authorization_code = current_user.authorization_codes.create(:client_id => @client, :redirect_uri => @redirect_uri)
-            # current_user.authorization_codes << authorization_code
-            # current_user.save()
             res.code = authorization_code.token
           when :token
             access_token = current_user.access_tokens.create(:client_id => @client).token
