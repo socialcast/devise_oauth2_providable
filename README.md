@@ -1,4 +1,4 @@
-# devise_oauth2_providable
+# devise_oauth2_providable &mdash; Mongoid Support Version (in progress)
 
 Rails3 engine that brings OAuth2 Provider support to your application.
 
@@ -13,13 +13,14 @@ http://tools.ietf.org/html/draft-ietf-oauth-v2-15
 * All server requests support authentication via bearer token included in
 the request.  http://tools.ietf.org/html/draft-ietf-oauth-v2-bearer-04
 
-
 ## Installation
 
 ```ruby
 # Bundler Gemfile
 gem 'devise_oauth2_providable'
 ```
+
+If you're using active record:
 
 ```ruby
 # create new Rails migration
@@ -42,6 +43,8 @@ class User
     :oauth2_authorization_code_grantable
 end
 ```
+
+If you're using Mongoid, you should be good to go.
 
 ## Models
 
