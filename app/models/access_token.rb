@@ -6,10 +6,13 @@ class AccessToken
   include ExpirableToken
   include MongoidExpirableToken
   
-  self.default_lifetime = 15.minutes
+  self.default_lifetime = 1.month
 
   before_validation :restrict_expires_at, :if => :refresh_token  
   belongs_to :refresh_token
+  
+  field :token
+  field :expires_at, :type => DateTime
     
   def token_response
     response = {

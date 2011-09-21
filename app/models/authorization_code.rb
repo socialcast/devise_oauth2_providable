@@ -6,7 +6,9 @@ class AuthorizationCode
   include ExpirableToken
   include MongoidExpirableToken
   
-   field :redirect_uri
+  field :redirect_uri
+  field :token
+  field :expires_at, :type => DateTime
   
   def access_token
     @access_token ||= expired! && user.access_tokens.create(:client => client)

@@ -21,7 +21,7 @@ module ExpirableToken
   end
 
   def expires_in
-    (self.expires_at - Time.now.utc).to_i
+    (expires_at - Time.now.utc).to_i
   end
 
   def expired!

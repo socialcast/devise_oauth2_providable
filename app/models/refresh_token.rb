@@ -6,8 +6,11 @@ class RefreshToken
   include ExpirableToken
   include MongoidExpirableToken
   
-  self.default_lifetime = 1.month
+  self.default_lifetime = 3.months
   
   has_many :access_tokens
 
+  field :token
+  field :expires_at, :type => DateTime
+  
 end
