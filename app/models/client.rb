@@ -1,11 +1,12 @@
 class Client
   include Mongoid::Document
-  embeds_many :access_tokens
-  embeds_many :refresh_tokens
 
   before_validation :init_secret, :on => :create, :unless => :secret?
   
   validates_presence_of :name, :website, :redirect_uri, :secret
+  has_many :access_tokens
+  has_many :refresh_tokens
+  has_many :authorization_codes
   
   field :name
   field :redirect_uri
@@ -15,12 +16,12 @@ class Client
   def Client.find_by_identifier(id)
     Client.first(:conditions => {:id => id})
   end
-    
-  private
-
-  def init_identifier
-    self.identifier = Devise::Oauth2Providable.random_id
+  
+  def identifier
+    return self.id.to_s
   end
+  
+  private
   def init_secret
     self.secret = Devise::Oauth2Providable.random_id
   end
