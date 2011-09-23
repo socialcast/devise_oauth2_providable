@@ -1,0 +1,5 @@
+<h2><%= link_to @client.name, @client.website %> is requesting permission to access your resources.</h2>
+
+<%= render 'oauth2/authorizations/form', :client => @client, :response_type => @response_type, :redirect_uri => @redirect_uri, :action => :approve %>
+<%= render 'oauth2/authorizations/form', :client => @client, :response_type => @response_type, :redirect_uri => @redirect_uri, :action => :deny %>
+

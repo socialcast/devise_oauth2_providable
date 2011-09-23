@@ -1,0 +1,7 @@
+<%= form_tag oauth2_authorizations_path, :class => action do %>
+  <%= hidden_field_tag :client_id, client.identifier %>
+  <%= hidden_field_tag :response_type, response_type %>
+  <%= hidden_field_tag :redirect_uri, redirect_uri %>
+  <%= submit_tag action.to_s.capitalize %>
+  <%= hidden_field_tag action, true %>
+<% end %>
