@@ -1,4 +1,4 @@
-class Client < ActiveRecord::Base
+class Devise::Oauth2Providable::Client < ActiveRecord::Base
   has_many :access_tokens
   has_many :refresh_tokens
 

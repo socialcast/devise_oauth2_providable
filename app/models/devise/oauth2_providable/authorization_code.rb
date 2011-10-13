@@ -1,6 +1,6 @@
 require 'expirable_token'
 
-class AuthorizationCode < ActiveRecord::Base
+class Devise::Oauth2Providable::AuthorizationCode < ActiveRecord::Base
   include ExpirableToken
   def access_token
     @access_token ||= expired! && user.access_tokens.create(:client => client)

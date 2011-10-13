@@ -17,6 +17,9 @@ module Devise
       def random_id
         SecureRandom.hex
       end
+      def table_name_prefix
+        'oauth2_'
+      end
     end
   end
 end

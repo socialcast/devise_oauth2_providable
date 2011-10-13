@@ -1,6 +1,6 @@
 require 'expirable_token'
 
-class AccessToken < ActiveRecord::Base
+class Devise::Oauth2Providable::AccessToken < ActiveRecord::Base
   include ExpirableToken
   self.default_lifetime = 15.minutes
 

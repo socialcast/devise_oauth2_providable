@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "devise_oauth2_providable/version"
+require "devise/oauth2_providable/version"
 
 Gem::Specification.new do |s|
   s.name        = "devise_oauth2_providable"
@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
 
   s.rubyforge_project = "devise_oauth2_providable"
 
-  s.add_runtime_dependency(%q<rails>, [">= 3.0.7"])
+  s.add_runtime_dependency(%q<rails>, [">= 3.1.0"])
   s.add_runtime_dependency(%q<devise>, [">= 1.3.3"])
   s.add_runtime_dependency(%q<rack-oauth2>, ["~> 0.11.0"])
   s.add_development_dependency(%q<rspec>, ['>= 2.5.0'])

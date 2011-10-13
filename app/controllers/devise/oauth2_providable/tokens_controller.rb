@@ -1,4 +1,4 @@
-class Oauth2::TokensController < ApplicationController
+class Devise::Oauth2Providable::TokensController < ApplicationController
   before_filter :authenticate_user!
 
   def create
