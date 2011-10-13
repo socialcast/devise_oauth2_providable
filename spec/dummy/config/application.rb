@@ -3,7 +3,7 @@ require File.expand_path('../boot', __FILE__)
 require 'rails/all'
 
 Bundler.require
-require "my_engine"
+require "devise_oauth2_providable"
 
 module Dummy
   class Application < Rails::Application
