@@ -17,7 +17,8 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency(%q<rails>, [">= 3.1.0"])
   s.add_runtime_dependency(%q<devise>, [">= 1.3.3"])
   s.add_runtime_dependency(%q<rack-oauth2>, ["~> 0.11.0"])
-  s.add_development_dependency(%q<rspec>, ['>= 2.5.0'])
+  s.add_development_dependency(%q<rspec-rails>, ['2.6.1'])
+  s.add_development_dependency(%q<sqlite3>, ['1.3.4'])
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
