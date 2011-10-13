@@ -4,10 +4,16 @@ describe Client do
   describe 'basic client instance' do
     subject { Client.create! :name => 'test', :redirect_uri => 'http://localhost:3000', :website => 'http://localhost' }
     it { should validate_presence_of :name }
+    it { should validate_uniqueness_of :name }
+    it { should allow_mass_assignment_of :name }
     it { should validate_presence_of :website }
+    it { should allow_mass_assignment_of :website }
     it { should validate_presence_of :redirect_uri }
+    it { should allow_mass_assignment_of :redirect_uri }
     it { should validate_uniqueness_of :identifier }
-    it { should have_many :refresh_tokens }
     it { should have_db_index(:identifier).unique(true) }
+    it { should_not allow_mass_assignment_of :identifier }
+    it { should_not allow_mass_assignment_of :secret }
+    it { should have_many :refresh_tokens }
   end
 end
