@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe AuthorizationCode do
+describe Devise::Oauth2Providable::AuthorizationCode do
   describe 'basic authorization code instance' do
     subject do
       client = Client.create! :name => 'test', :redirect_uri => 'http://localhost:3000', :website => 'http://localhost'

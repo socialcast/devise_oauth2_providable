@@ -1,8 +1,10 @@
 require 'spec_helper'
 
-describe Client do
+describe Devise::Oauth2Providable::Client do
+  it { Devise::Oauth2Providable::Client.table_name.should == 'oauth2_clients' }
+
   describe 'basic client instance' do
-    subject { Client.create! :name => 'test', :redirect_uri => 'http://localhost:3000', :website => 'http://localhost' }
+    subject { Devise::Oauth2Providable::Client.create! :name => 'test', :redirect_uri => 'http://localhost:3000', :website => 'http://localhost' }
     it { should validate_presence_of :name }
     it { should validate_uniqueness_of :name }
     it { should allow_mass_assignment_of :name }
