@@ -32,3 +32,4 @@ test/*.sqlite3
 tmp
 log
 *.log
+.sqlite3
