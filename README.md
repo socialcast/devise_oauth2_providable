@@ -25,6 +25,15 @@ install database migration
 ```
 $ rake devise_oauth2_providable:install:migrations
 ```
+
+install oauth routes
+```ruby
+# config/routes.rb
+Rails.application.routs.draw do
+  mount Devise::Oauth2Providable::Engine => '/oauth2'
+end
+```
+
 ```ruby
 class User
   # NOTE: include :database_authenticatable configuration
