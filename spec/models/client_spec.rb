@@ -17,5 +17,6 @@ describe Devise::Oauth2Providable::Client do
     it { should_not allow_mass_assignment_of :identifier }
     it { should_not allow_mass_assignment_of :secret }
     it { should have_many :refresh_tokens }
+    it { should have_many :authorization_codes }
   end
 end

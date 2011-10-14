@@ -6,7 +6,7 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy do
       context 'with valid params' do
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
-          @client = Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
+          @client = Devise::Oauth2Providable::Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
           @refresh_token = @client.refresh_tokens.create! :user => @user
           params = {
             :grant_type => 'refresh_token',
@@ -20,7 +20,7 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy do
         it { response.code.to_i.should == 200 }
         it { response.content_type.should == 'application/json' }
         it 'returns json' do
-          token = AccessToken.last
+          token = Devise::Oauth2Providable::AccessToken.last
           refresh_token = @refresh_token
           expected = {
             :token_type => 'bearer',
@@ -34,7 +34,7 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy do
       context 'with invalid refresh_token' do
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
-          @client = Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
+          @client = Devise::Oauth2Providable::Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
           @refresh_token = @client.refresh_tokens.create! :user => @user
           params = {
             :grant_type => 'refresh_token',
@@ -48,7 +48,7 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy do
         it { response.code.to_i.should == 400 }
         it { response.content_type.should == 'application/json' }
         it 'returns json' do
-          token = AccessToken.last
+          token = Devise::Oauth2Providable::AccessToken.last
           refresh_token = @refresh_token
           expected = {
             :error => 'invalid_grant',

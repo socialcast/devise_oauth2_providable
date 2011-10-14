@@ -1,6 +1,7 @@
 class Devise::Oauth2Providable::Client < ActiveRecord::Base
   has_many :access_tokens
   has_many :refresh_tokens
+  has_many :authorization_codes
 
   before_validation :init_identifier, :on => :create, :unless => :identifier?
   before_validation :init_secret, :on => :create, :unless => :secret?

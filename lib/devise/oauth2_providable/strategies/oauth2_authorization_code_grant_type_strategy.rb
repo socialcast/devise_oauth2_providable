@@ -8,7 +8,7 @@ module Devise
       end
 
       def authenticate!
-        if client && code = AuthorizationCode.valid.find_by_token(params[:code])
+        if client && code = client.authorization_codes.valid.find_by_token(params[:code])
           success! code.user
         elsif !halted?
           oauth_error! :invalid_grant, 'invalid authorization code request'
