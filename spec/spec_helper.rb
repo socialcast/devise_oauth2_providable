@@ -4,7 +4,7 @@ require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 
 require 'rspec/rails'
 require 'shoulda-matchers'
-# require 'pry'
+require 'pry'
 
 ENGINE_RAILS_ROOT=File.join(File.dirname(__FILE__), '../')
 
@@ -16,4 +16,8 @@ RSpec.configure do |config|
   config.include Devise::TestHelpers, :type => :controller
 
   config.use_transactional_fixtures = true
+
+  # enable rendering of views for controller tests
+  # see http://stackoverflow.com/questions/4401539/rspec-2-how-to-render-views-by-default-for-all-controller-specs
+  config.render_views
 end
