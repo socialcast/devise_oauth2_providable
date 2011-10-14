@@ -5,7 +5,7 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
     describe 'with grant_type=authorization_code' do
       context 'with valid params' do
         before do
-          @user = User.create! :email => 'ryan@socialcast.com', :name => 'ryan sonnek', :password => 'test'
+          @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
           @client = Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
           @authorization_code = @user.authorization_codes.create(:client_id => @client, :redirect_uri => @client.redirect_uri)
           params = {
@@ -33,7 +33,7 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
       end
       context 'with invalid authorization_code' do
         before do
-          @user = User.create! :email => 'ryan@socialcast.com', :name => 'ryan sonnek', :password => 'test'
+          @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
           @client = Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
           @authorization_code = @user.authorization_codes.create(:client_id => @client, :redirect_uri => @client.redirect_uri)
           params = {

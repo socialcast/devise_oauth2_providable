@@ -5,7 +5,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
     describe 'with grant_type=password' do
       context 'with valid params' do
         before do
-          @user = User.create! :email => 'ryan@socialcast.com', :name => 'ryan sonnek', :password => 'test'
+          @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
           @client = Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
 
           params = {
@@ -28,7 +28,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
       end
       context 'with invalid params' do
         before do
-          @user = User.create! :email => 'ryan@socialcast.com', :name => 'ryan sonnek', :password => 'test'
+          @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
           @client = Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
 
           params = {
@@ -53,7 +53,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
       end
       context 'with invalid client' do
         before do
-          @user = User.create! :email => 'ryan@socialcast.com', :name => 'ryan sonnek', :password => 'test'
+          @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
 
           params = {
             :grant_type => 'password',

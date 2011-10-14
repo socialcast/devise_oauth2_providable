@@ -3,8 +3,8 @@ require 'spec_helper'
 describe Devise::Oauth2Providable::AuthorizationCode do
   describe 'basic authorization code instance' do
     subject do
-      client = Client.create! :name => 'test', :redirect_uri => 'http://localhost:3000', :website => 'http://localhost'
-      AuthorizationCode.create! :client => client
+      client = Devise::Oauth2Providable::Client.create! :name => 'test', :redirect_uri => 'http://localhost:3000', :website => 'http://localhost'
+      Devise::Oauth2Providable::AuthorizationCode.create! :client => client
     end
     it { should validate_presence_of :token }
     it { should validate_uniqueness_of :token }

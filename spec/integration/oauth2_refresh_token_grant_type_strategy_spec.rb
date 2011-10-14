@@ -5,7 +5,7 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy do
     describe 'with grant_type=refresh_token' do
       context 'with valid params' do
         before do
-          @user = User.create! :email => 'ryan@socialcast.com', :name => 'ryan sonnek', :password => 'test'
+          @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
           @client = Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
           @refresh_token = @client.refresh_tokens.create! :user => @user
           params = {
@@ -33,7 +33,7 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy do
       end
       context 'with invalid refresh_token' do
         before do
-          @user = User.create! :email => 'ryan@socialcast.com', :name => 'ryan sonnek', :password => 'test'
+          @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
           @client = Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
           @refresh_token = @client.refresh_tokens.create! :user => @user
           params = {

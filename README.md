@@ -21,16 +21,9 @@ the request.  http://tools.ietf.org/html/draft-ietf-oauth-v2-bearer-04
 gem 'devise_oauth2_providable'
 ```
 
-```ruby
-# create new Rails migration
-class CreateOauth2Schema < ActiveRecord::Migration
-  def self.up
-    Devise::Oauth2Providable::Schema.up(self)
-  end
-  def self.down
-    Devise::Oauth2Providable::Schema.down(self)
-  end
-end
+install database migration
+```
+$ rake devise_oauth2_providable:install:migrations
 ```
 ```ruby
 class User
