@@ -6,7 +6,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
       context 'with valid params' do
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
-          @client = Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
+          @client = Devise::Oauth2Providable::Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
 
           params = {
             :grant_type => 'password',
@@ -21,7 +21,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
         it { response.code.to_i.should == 200 }
         it { response.content_type.should == 'application/json' }
         it 'returns json' do
-          token = AccessToken.last
+          token = Devise::Oauth2Providable::AccessToken.last
           expected = token.token_response
           response.body.should match_json(expected)
         end
@@ -29,7 +29,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
       context 'with invalid params' do
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
-          @client = Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
+          @client = Devise::Oauth2Providable::Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
 
           params = {
             :grant_type => 'password',

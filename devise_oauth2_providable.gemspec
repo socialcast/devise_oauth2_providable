@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency(%q<rspec-rails>, ['2.6.1'])
   s.add_development_dependency(%q<sqlite3>, ['1.3.4'])
   s.add_development_dependency(%q<shoulda-matchers>, ['1.0.0.beta3'])
+  s.add_development_dependency(%q<pry>, ['0.9.6.2'])
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

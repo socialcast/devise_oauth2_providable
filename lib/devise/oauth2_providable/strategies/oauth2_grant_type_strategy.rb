@@ -4,7 +4,7 @@ module Devise
   module Strategies
     class Oauth2GrantTypeStrategy < Authenticatable
       def valid?
-        params[:controller] == 'oauth2/tokens' && request.post? && params[:grant_type] == grant_type
+        params[:controller] == 'devise/oauth2_providable/tokens' && request.post? && params[:grant_type] == grant_type
       end
 
       # defined by subclass
@@ -12,7 +12,7 @@ module Devise
       end
 
       def client
-        @client ||= Client.find_by_identifier params[:client_id]
+        @client ||= Devise::Oauth2Providable::Client.find_by_identifier params[:client_id]
         env['oauth2.client'] = @client
         @client
       end
