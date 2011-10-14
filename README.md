@@ -3,11 +3,11 @@
 Rails3 engine that brings OAuth2 Provider support to your application.
 
 Current OAuth2 Specification Draft:
-http://tools.ietf.org/html/draft-ietf-oauth-v2-15
+http://tools.ietf.org/html/draft-ietf-oauth-v2-22
 
 ## Features
 
-* integrates OAuth2 authentication with Devise authenthentication stack
+* integrate OAuth2 authentication with Devise authenthentication stack
 * one-stop-shop includes all Models, Controllers and Views to get up and
   running quickly
 * All server requests support authentication via bearer token included in
@@ -22,24 +22,28 @@ the request.  http://tools.ietf.org/html/draft-ietf-oauth-v2-bearer-04
 
 ## Installation
 
+#### Install gem
 ```ruby
-# Bundler Gemfile
+# Gemfile
 gem 'devise_oauth2_providable'
 ```
 
-install database migration
+#### Migrate database for Oauth2 models
 ```
 $ rake devise_oauth2_providable:install:migrations
+$ rake db:migrate
 ```
 
-install oauth routes
+#### Add Oauth2 Routes
 ```ruby
 # config/routes.rb
 Rails.application.routs.draw do
+  # oauth routes can be mounted to any path (ex: /oauth2 or /oauth)
   mount Devise::Oauth2Providable::Engine => '/oauth2'
 end
 ```
 
+#### Configure User for supported Oauth2 flows
 ```ruby
 class User
   # NOTE: include :database_authenticatable configuration
