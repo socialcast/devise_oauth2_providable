@@ -12,7 +12,13 @@ http://tools.ietf.org/html/draft-ietf-oauth-v2-15
   running quickly
 * All server requests support authentication via bearer token included in
 the request.  http://tools.ietf.org/html/draft-ietf-oauth-v2-bearer-04
+* customizable mount point for oauth2 routes (ex: /oauth2 vs /oauth)
 
+
+## Requirements
+
+* Devise authentication library
+* Rails 3.1 or higher
 
 ## Installation
 
