@@ -6,7 +6,7 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
       context 'with valid params' do
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
-          @client = Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
+          @client = Devise::Oauth2Providable::Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
           @authorization_code = @user.authorization_codes.create(:client_id => @client, :redirect_uri => @client.redirect_uri)
           params = {
             :grant_type => 'authorization_code',
@@ -20,8 +20,8 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
         it { response.code.to_i.should == 200 }
         it { response.content_type.should == 'application/json' }
         it 'returns json' do
-          token = AccessToken.last
-          refresh_token = RefreshToken.last
+          token = Devise::Oauth2Providable::AccessToken.last
+          refresh_token = Devise::Oauth2Providable::RefreshToken.last
           expected = {
             :token_type => 'bearer',
             :expires_in => 899,
@@ -34,7 +34,7 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
       context 'with invalid authorization_code' do
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
-          @client = Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
+          @client = Devise::Oauth2Providable::Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
           @authorization_code = @user.authorization_codes.create(:client_id => @client, :redirect_uri => @client.redirect_uri)
           params = {
             :grant_type => 'authorization_code',
@@ -48,7 +48,7 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
         it { response.code.to_i.should == 400 }
         it { response.content_type.should == 'application/json' }
         it 'returns json' do
-          token = AccessToken.last
+          token = Devise::Oauth2Providable::AccessToken.last
           refresh_token = @refresh_token
           expected = {
             :error => 'invalid_grant',
