@@ -37,7 +37,7 @@ $ rake db:migrate
 #### Add Oauth2 Routes
 ```ruby
 # config/routes.rb
-Rails.application.routs.draw do
+Rails.application.routes.draw do
   # oauth routes can be mounted to any path (ex: /oauth2 or /oauth)
   mount Devise::Oauth2Providable::Engine => '/oauth2'
 end
