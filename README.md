@@ -67,7 +67,11 @@ http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-1.3
 Short lived token used by clients to perform subsequent requests (see
 bearer token spec)
 
-expires after 15min by default.
+expires after 15min by default.  to customize the duration of the access token:
+
+```ruby
+Devise::Oauth2Providable::AccessToken.default_lifetime = 1.minute
+```
 
 ### RefreshToken
 http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-1.5
@@ -75,7 +79,11 @@ http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-1.5
 Long lived token used by clients to request new access tokens without
 requiring user intervention to re-authorize.
 
-expires after 1 month by default.
+expires after 1 month by default. to customize the duration of refresh token:
+
+```ruby
+Devise::Oauth2Providable::RefreshToken.default_lifetime = 1.year
+```
 
 ### AuthorizationCode
 http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-1.4.1
@@ -83,7 +91,12 @@ http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-1.4.1
 *Very* short lived token created to allow a client to request an access
 token after a user has gone through the authorization flow.
 
-expires after 1min by default.
+expires after 1min by default. to customize the duration of the
+authorization code:
+
+```ruby
+Devise::Oauth2Providable::AuthorizationCode.default_lifetime = 5.minutes
+```
 
 ## Routes
 
