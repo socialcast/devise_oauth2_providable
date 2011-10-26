@@ -12,8 +12,9 @@ module Devise
       end
 
       def client
-        @client ||= Devise::Oauth2Providable::Client.find_by_identifier params[:client_id]
-        env['oauth2.client'] = @client
+        return @client if @client
+        @client = Devise::Oauth2Providable::Client.find_by_identifier params[:client_id]
+        env[Devise::Oauth2Providable::CLIENT_ENV_REF] = @client
         @client
       end
       # return custom error response in accordance with the oauth spec

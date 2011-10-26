@@ -12,6 +12,9 @@ require 'devise/oauth2_providable/models/oauth2_authorization_code_grantable'
 
 module Devise
   module Oauth2Providable
+    CLIENT_ENV_REF = 'oauth2.client'
+    REFRESH_TOKEN_ENV_REF = "oauth2.refresh_token"
+
     class << self
       def random_id
         SecureRandom.hex
