@@ -55,6 +55,14 @@ class User
 end
 ```
 
+#### (optional) Configure token expiration settings
+```ruby
+# config/application.rb
+config.devise_oauth2_providable.access_token_expires_in         = 1.second # 15.minute default
+config.devise_oauth2_providable.refresh_token_expires_in        = 1.minute # 1.month default
+config.devise_oauth2_providable.authorization_token_expires_in  = 5.seconds # 1.minute default
+```
+
 ## Models
 
 ### Client
