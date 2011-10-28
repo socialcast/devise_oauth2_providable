@@ -4,14 +4,14 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
   describe 'POST /oauth2/token' do
     describe 'with grant_type=password' do
       context 'with valid params' do
+        with :client
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
-          @client = Devise::Oauth2Providable::Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
 
           params = {
             :grant_type => 'password',
-            :client_id => @client.identifier,
-            :client_secret => @client.secret,
+            :client_id => client.identifier,
+            :client_secret => client.secret,
             :username => @user.email,
             :password => 'test'
           }
@@ -27,14 +27,14 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
         end
       end
       context 'with invalid params' do
+        with :client
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
-          @client = Devise::Oauth2Providable::Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
 
           params = {
             :grant_type => 'password',
-            :client_id => @client.identifier,
-            :client_secret => @client.secret,
+            :client_id => client.identifier,
+            :client_secret => client.secret,
             :username => @user.email,
             :password => 'bar'
           }

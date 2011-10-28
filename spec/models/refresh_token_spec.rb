@@ -4,8 +4,8 @@ describe Devise::Oauth2Providable::RefreshToken do
   it { Devise::Oauth2Providable::RefreshToken.table_name.should == 'oauth2_refresh_tokens' }
 
   describe 'basic refresh token instance' do
+    with :client
     subject do
-      client = Devise::Oauth2Providable::Client.create! :name => 'test', :redirect_uri => 'http://localhost:3000', :website => 'http://localhost'
       Devise::Oauth2Providable::RefreshToken.create! :client => client
     end
     it { should validate_presence_of :token }

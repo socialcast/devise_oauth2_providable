@@ -4,8 +4,8 @@ describe Devise::Oauth2Providable::AccessToken do
   it { Devise::Oauth2Providable::AccessToken.table_name.should == 'oauth2_access_tokens' }
 
   describe 'basic access token instance' do
+    with :client
     subject do
-      client = Devise::Oauth2Providable::Client.create! :name => 'test', :redirect_uri => 'http://localhost:3000', :website => 'http://localhost'
       Devise::Oauth2Providable::AccessToken.create! :client => client
     end
     it { should validate_presence_of :token }
@@ -24,9 +24,9 @@ describe Devise::Oauth2Providable::AccessToken do
 
   describe '#expires_at' do
     context 'when refresh token does not expire before access token' do
+      with :client
       before do
         @later = 1.year.from_now
-        client = Devise::Oauth2Providable::Client.create! :name => 'test', :redirect_uri => 'http://localhost:3000', :website => 'http://localhost'
         @refresh_token = client.refresh_tokens.create!
         @refresh_token.expires_at = @soon
         @access_token = Devise::Oauth2Providable::AccessToken.create! :client => client, :refresh_token => @refresh_token
@@ -36,9 +36,9 @@ describe Devise::Oauth2Providable::AccessToken do
       end
     end
     context 'when refresh token expires before access token' do
+      with :client
       before do
         @soon = 1.minute.from_now
-        client = Devise::Oauth2Providable::Client.create! :name => 'test', :redirect_uri => 'http://localhost:3000', :website => 'http://localhost'
         @refresh_token = client.refresh_tokens.create!
         @refresh_token.expires_at = @soon
         @access_token = Devise::Oauth2Providable::AccessToken.create! :client => client, :refresh_token => @refresh_token
@@ -49,4 +49,3 @@ describe Devise::Oauth2Providable::AccessToken do
     end
   end
 end
-

@@ -2,9 +2,15 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 
+require 'pry'
 require 'rspec/rails'
 require 'shoulda-matchers'
-require 'pry'
+
+require 'factory_girl_rspec'
+FactoryGirl.definition_file_paths = [
+    File.join(File.dirname(__FILE__), 'factories')
+]
+FactoryGirl.find_definitions
 
 ENGINE_RAILS_ROOT=File.join(File.dirname(__FILE__), '../')
 

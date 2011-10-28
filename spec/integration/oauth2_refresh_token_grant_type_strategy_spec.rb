@@ -4,14 +4,14 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy do
   describe 'POST /oauth2/token' do
     describe 'with grant_type=refresh_token' do
       context 'with valid params' do
+        with :client
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
-          @client = Devise::Oauth2Providable::Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
-          @refresh_token = @client.refresh_tokens.create! :user => @user
+          @refresh_token = client.refresh_tokens.create! :user => @user
           params = {
             :grant_type => 'refresh_token',
-            :client_id => @client.identifier,
-            :client_secret => @client.secret,
+            :client_id => client.identifier,
+            :client_secret => client.secret,
             :refresh_token => @refresh_token.token
           }
 
@@ -34,12 +34,12 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy do
       context 'with invalid refresh_token' do
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
-          @client = Devise::Oauth2Providable::Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
-          @refresh_token = @client.refresh_tokens.create! :user => @user
+          client = Devise::Oauth2Providable::Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
+          @refresh_token = client.refresh_tokens.create! :user => @user
           params = {
             :grant_type => 'refresh_token',
-            :client_id => @client.identifier,
-            :client_secret => @client.secret,
+            :client_id => client.identifier,
+            :client_secret => client.secret,
             :refresh_token => 'invalid'
           }
 

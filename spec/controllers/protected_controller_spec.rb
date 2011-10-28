@@ -3,8 +3,8 @@ require 'spec_helper'
 describe ProtectedController do
 
   describe 'get :index' do
+    with :client
     before do
-      client = Devise::Oauth2Providable::Client.create! :name => 'test', :redirect_uri => 'http://localhost:3000', :website => 'http://localhost'
       @user = User.create! :email => 'foo@example.com'
       @token = Devise::Oauth2Providable::AccessToken.create! :client => client, :user => @user
     end

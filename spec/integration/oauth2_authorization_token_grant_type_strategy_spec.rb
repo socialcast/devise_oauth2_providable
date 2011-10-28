@@ -3,15 +3,15 @@ require 'spec_helper'
 describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
   describe 'POST /oauth2/token' do
     describe 'with grant_type=authorization_code' do
+      with :client
       context 'with valid params' do
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
-          @client = Devise::Oauth2Providable::Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
-          @authorization_code = @user.authorization_codes.create(:client_id => @client, :redirect_uri => @client.redirect_uri)
+          @authorization_code = @user.authorization_codes.create(:client_id => client, :redirect_uri => client.redirect_uri)
           params = {
             :grant_type => 'authorization_code',
-            :client_id => @client.identifier,
-            :client_secret => @client.secret,
+            :client_id => client.identifier,
+            :client_secret => client.secret,
             :code => @authorization_code.token
           }
 
@@ -32,14 +32,14 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
         end
       end
       context 'with invalid authorization_code' do
+        with :client
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
-          @client = Devise::Oauth2Providable::Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
-          @authorization_code = @user.authorization_codes.create(:client_id => @client, :redirect_uri => @client.redirect_uri)
+          @authorization_code = @user.authorization_codes.create(:client_id => client, :redirect_uri => client.redirect_uri)
           params = {
             :grant_type => 'authorization_code',
-            :client_id => @client.identifier,
-            :client_secret => @client.secret,
+            :client_id => client.identifier,
+            :client_secret => client.secret,
             :refresh_token => 'invalid'
           }
 
