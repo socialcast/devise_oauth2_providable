@@ -40,6 +40,12 @@ module Dummy
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+
+    # (optional) configure token expiration
+    # config.devise_oauth2_providable.access_token_expires_in         = 1.second # 15.minute default
+    # config.devise_oauth2_providable.refresh_token_expires_in        = 1.minute # 1.month default
+    # config.devise_oauth2_providable.authorization_token_expires_in  = 5.seconds # 1.minute default
   end
 end
 
