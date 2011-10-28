@@ -7,8 +7,8 @@ module ExpirableToken
       belongs_to :user
       belongs_to :client
 
-      before_validation :init_token, :on => :create, :unless => :token?
-      before_validation :init_expires_at, :on => :create, :unless => :expires_at?
+      after_initialize :init_token, :on => :create, :unless => :token?
+      after_initialize :init_expires_at, :on => :create, :unless => :expires_at?
       validates :expires_at, :presence => true
       validates :client, :presence => true
       validates :token, :presence => true, :uniqueness => true
@@ -20,10 +20,12 @@ module ExpirableToken
     end
   end
 
+  # number of seconds until the token expires
   def expires_in
     (expires_at - Time.now.utc).to_i
   end
 
+  # forcefully expire the token
   def expired!
     self.expires_at = Time.now.utc
     self.save!

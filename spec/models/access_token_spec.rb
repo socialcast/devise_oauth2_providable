@@ -22,16 +22,30 @@ describe Devise::Oauth2Providable::AccessToken do
     it { should have_db_index :expires_at }
   end
 
-  describe 'refresh token expires before access token expires_at' do
-    before do
-      @soon = 1.minute.from_now
-      client = Devise::Oauth2Providable::Client.create! :name => 'test', :redirect_uri => 'http://localhost:3000', :website => 'http://localhost'
-      @refresh_token = client.refresh_tokens.create!
-      @refresh_token.expires_at = @soon
-      @access_token = Devise::Oauth2Providable::AccessToken.create! :client => client, :refresh_token => @refresh_token
+  describe '#expires_at' do
+    context 'when refresh token does not expire before access token' do
+      before do
+        @later = 1.year.from_now
+        client = Devise::Oauth2Providable::Client.create! :name => 'test', :redirect_uri => 'http://localhost:3000', :website => 'http://localhost'
+        @refresh_token = client.refresh_tokens.create!
+        @refresh_token.expires_at = @soon
+        @access_token = Devise::Oauth2Providable::AccessToken.create! :client => client, :refresh_token => @refresh_token
+      end
+      focus 'should not set the access token expires_at to equal refresh token' do
+        @access_token.expires_at.should_not == @later
+      end
     end
-    it 'should set the access token expires_at to equal refresh token' do
-      @access_token.expires_at.should eq @soon
+    context 'when refresh token expires before access token' do
+      before do
+        @soon = 1.minute.from_now
+        client = Devise::Oauth2Providable::Client.create! :name => 'test', :redirect_uri => 'http://localhost:3000', :website => 'http://localhost'
+        @refresh_token = client.refresh_tokens.create!
+        @refresh_token.expires_at = @soon
+        @access_token = Devise::Oauth2Providable::AccessToken.create! :client => client, :refresh_token => @refresh_token
+      end
+      it 'should set the access token expires_at to equal refresh token' do
+        @access_token.expires_at.should == @soon
+      end
     end
   end
 end

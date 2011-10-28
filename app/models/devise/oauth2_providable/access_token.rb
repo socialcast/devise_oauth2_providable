@@ -4,7 +4,7 @@ class Devise::Oauth2Providable::AccessToken < ActiveRecord::Base
   include ExpirableToken
   self.default_lifetime = 15.minutes
 
-  before_validation :restrict_expires_at, :if => :refresh_token
+  before_validation :restrict_expires_at, :on => :create, :if => :refresh_token
   belongs_to :refresh_token
 
   def token_response
@@ -20,6 +20,6 @@ class Devise::Oauth2Providable::AccessToken < ActiveRecord::Base
   private
 
   def restrict_expires_at
-    self.expires_at = [self.expires_at, refresh_token.expires_at].min
+    self.expires_at = [self.expires_at, refresh_token.expires_at].compact.min
   end
 end
