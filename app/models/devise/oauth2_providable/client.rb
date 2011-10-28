@@ -5,7 +5,7 @@ class Devise::Oauth2Providable::Client < ActiveRecord::Base
 
   before_validation :init_identifier, :on => :create, :unless => :identifier?
   before_validation :init_secret, :on => :create, :unless => :secret?
-  validates :website, :redirect_uri, :secret, :presence => true
+  validates :website, :secret, :presence => true
   validates :name, :presence => true, :uniqueness => true
   validates :identifier, :presence => true, :uniqueness => true
 
