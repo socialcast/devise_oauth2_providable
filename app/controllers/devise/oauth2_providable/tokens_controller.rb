@@ -14,7 +14,7 @@ class Devise::Oauth2Providable::TokensController < ApplicationController
 
     oauth2_current_access_token.destroy if oauth2_current_access_token
     
-    head :deleted
+    head :status => 204
   end
 
   private
