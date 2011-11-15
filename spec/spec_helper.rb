@@ -1,5 +1,11 @@
 ##
-# Configure Rails Envinronment
+# Variables
+##
+
+spec_root = File.expand_path('..', __FILE__)
+
+##
+# Configure Rails environment
 ##
 
 ENV["RAILS_ENV"] = "test"
@@ -7,7 +13,7 @@ require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 require 'rails/test_help'
 
 ##
-# Setup RSpec
+# Setup testing tools
 ##
 
 require 'rspec/rails'
@@ -19,12 +25,6 @@ RSpec.configure do |config|
   # See SOF question: http://bit.ly/sof-rspec-controller-view-rendering
   config.render_views
 end
-
-spec_root = File.expand_path('..', __FILE__)
-
-##
-# Setup FactoryGirl
-## 
 
 require 'factory_girl_rspec'
 FactoryGirl.definition_file_paths = [File.join(spec_root, 'factories')]
