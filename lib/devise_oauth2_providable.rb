@@ -15,6 +15,7 @@ module Devise
   module Oauth2Providable
     CLIENT_ENV_REF = 'oauth2.client'
     REFRESH_TOKEN_ENV_REF = "oauth2.refresh_token"
+    ACCESS_TOKEN_ENV_REF = "oauth2.access_token"
 
     class << self
       def random_id

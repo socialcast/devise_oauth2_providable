@@ -11,6 +11,7 @@ module Devise
         @req.setup!
         token = Devise::Oauth2Providable::AccessToken.find_by_token @req.access_token
         env[Devise::Oauth2Providable::CLIENT_ENV_REF] = token.client if token
+        env[Devise::Oauth2Providable::ACCESS_TOKEN_ENV_REF] = token
         resource = token ? token.user : nil
         if validate(resource)
           success! resource
