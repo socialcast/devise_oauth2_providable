@@ -33,3 +33,5 @@ tmp
 log
 *.log
 *.sqlite3
+.rvmrc
+.rspec
