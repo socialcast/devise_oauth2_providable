@@ -1,7 +1,8 @@
 module Devise
   module Oauth2Providable
     class AuthorizationsController < ApplicationController
-      before_filter :authenticate_user!
+      include Devise::Controllers::InternalHelpers
+      before_filter :authenticate_scope!
 
       rescue_from Rack::OAuth2::Server::Authorize::BadRequest do |e|
         @error = e
@@ -37,13 +38,13 @@ module Devise
             if params[:approve].present?
               case req.response_type
               when :code
-                authorization_code = current_user.authorization_codes.create(:client => @client, :redirect_uri => @redirect_uri)
+                authorization_code = resource.authorization_codes.create(:client => @client, :redirect_uri => @redirect_uri)
                 res.code = authorization_code.token
               when :token
-                access_token = current_user.access_tokens.create(:client => @client).token
+                access_token = resource.access_tokens.create(:client => @client).token
                 bearer_token = Rack::OAuth2::AccessToken::Bearer.new(:access_token => access_token)
                 res.access_token = bearer_token
-                res.uid = current_user.id
+                res.uid = resource.id
               end
               res.approve!
             else
@@ -53,6 +54,13 @@ module Devise
             @response_type = req.response_type
           end
         end
+      end
+
+      # Authenticates the current scope and gets the current resource from the session.
+      # Taken from devise
+      def authenticate_scope!
+        send(:"authenticate_#{resource_name}!", :force => true)
+        self.resource = send(:"current_#{resource_name}")
       end
     end
   end
