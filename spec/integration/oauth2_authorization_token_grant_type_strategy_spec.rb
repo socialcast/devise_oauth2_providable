@@ -3,11 +3,11 @@ require 'spec_helper'
 describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
   describe 'POST /oauth2/token' do
     describe 'with grant_type=authorization_code' do
-      with :client
       context 'with valid params' do
+        with :client
+        with :user
         before do
-          @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
-          @authorization_code = @user.authorization_codes.create(:client_id => client, :redirect_uri => client.redirect_uri)
+          @authorization_code = user.authorization_codes.create(:client_id => client, :redirect_uri => client.redirect_uri)
           params = {
             :grant_type => 'authorization_code',
             :client_id => client.identifier,
@@ -33,9 +33,9 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
       end
       context 'with invalid authorization_code' do
         with :client
+        with :user
         before do
-          @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
-          @authorization_code = @user.authorization_codes.create(:client_id => client, :redirect_uri => client.redirect_uri)
+          @authorization_code = user.authorization_codes.create(:client_id => client, :redirect_uri => client.redirect_uri)
           params = {
             :grant_type => 'authorization_code',
             :client_id => client.identifier,
