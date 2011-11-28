@@ -1,15 +1,13 @@
 # Configure Rails Envinronment
 ENV["RAILS_ENV"] = "test"
-require File.expand_path("../dummy/config/environment.rb",  __FILE__)
+spec_root = File.expand_path('..', __FILE__)
+require File.expand_path("dummy/config/environment.rb",  spec_root)
 
 require 'pry'
 require 'rspec/rails'
 require 'shoulda-matchers'
-
 require 'factory_girl_rspec'
-FactoryGirl.definition_file_paths = [
-    File.join(File.dirname(__FILE__), 'factories')
-]
+FactoryGirl.definition_file_paths = [File.join(spec_root, 'factories')]
 FactoryGirl.find_definitions
 
 ENGINE_RAILS_ROOT=File.join(File.dirname(__FILE__), '../')
@@ -27,3 +25,5 @@ RSpec.configure do |config|
   # see http://stackoverflow.com/questions/4401539/rspec-2-how-to-render-views-by-default-for-all-controller-specs
   config.render_views
 end
+
+ActiveRecord::Migrator.migrate(File.expand_path("dummy/db/migrate/", spec_root))
