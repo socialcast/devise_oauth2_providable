@@ -1,7 +1,7 @@
 module Devise
   module Oauth2Providable
     class AuthorizationsController < ApplicationController
-      include Devise::Controllers::InternalHelpers
+      include Devise::Oauth2Providable::Controllers::Helpers
       before_filter :authenticate_scope!
 
       rescue_from Rack::OAuth2::Server::Authorize::BadRequest do |e|
@@ -54,13 +54,6 @@ module Devise
             @response_type = req.response_type
           end
         end
-      end
-
-      # Authenticates the current scope and gets the current resource from the session.
-      # Taken from devise
-      def authenticate_scope!
-        send(:"authenticate_#{resource_name}!", :force => true)
-        self.resource = send(:"current_#{resource_name}")
       end
     end
   end
