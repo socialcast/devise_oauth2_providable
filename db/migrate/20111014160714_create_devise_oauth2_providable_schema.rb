@@ -42,7 +42,6 @@ class CreateDeviseOauth2ProvidableSchema < ActiveRecord::Migration
       t.belongs_to :user, :client
       t.string :token
       t.datetime :expires_at
-      t.string :redirect_uri
       t.timestamps
     end
     change_table :oauth2_authorization_codes do |t|
