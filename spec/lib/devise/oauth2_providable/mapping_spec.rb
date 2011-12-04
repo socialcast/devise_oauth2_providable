@@ -32,6 +32,47 @@ describe Devise::Oauth2Providable::Mapping do
       end
     end
 
+    describe "#models" do
+      subject { mapping_class.new(:users) }
+
+      context "when no model overrides exist for the scope" do
+        before(:each) do
+          ::Rails.application.config.
+            stub_chain(:devise_oauth2_providable, :scope_settings).
+            and_return({})
+        end
+
+        it "the defaults are used" do
+          subject.models.should eql({
+            :access_token  => Devise::Oauth2Providable::AccessToken,
+            :client        => Devise::Oauth2Providable::Client,
+            :refresh_token => Devise::Oauth2Providable::RefreshToken,
+            :user          => User
+          })
+        end
+      end
+
+      context "when model overrides are specified" do
+        class MyTotallyAwesomeUser 
+        end
+
+        before(:each) do
+          ::Rails.application.config.
+            stub_chain(:devise_oauth2_providable, :scope_settings).
+            and_return({:user => {:models => {:user => 'MyTotallyAwesomeUser'}}})
+        end
+
+        it "uses the overrides instead" do
+          subject.models.should eql({
+            :access_token  => Devise::Oauth2Providable::AccessToken,
+            :client        => Devise::Oauth2Providable::Client,
+            :refresh_token => Devise::Oauth2Providable::RefreshToken,
+            :user          => MyTotallyAwesomeUser
+          })
+        end
+      end
+    end
+
     describe "#path_prefix" do
       context "is specified" do
         subject { mapping = mapping_class.new(:users, {:path_prefix => "member"}) }
