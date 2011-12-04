@@ -21,7 +21,7 @@ describe Devise::Oauth2Providable::Mapping do
       end
     end
 
-    describe "devise_scope" do
+    describe "#devise_scope" do
       let (:devise_scope) { stub() }
       it "returns the devise mapping object" do
         Devise.mappings.should_receive(:[]).with(:user).and_return(devise_scope)
@@ -32,7 +32,7 @@ describe Devise::Oauth2Providable::Mapping do
       end
     end
 
-    describe "path_prefix" do
+    describe "#path_prefix" do
       context "is specified" do
         subject { mapping = mapping_class.new(:users, {:path_prefix => "member"}) }
 
@@ -42,24 +42,30 @@ describe Devise::Oauth2Providable::Mapping do
       end
     end
 
-    context "when custom controllers are specified" do
-      it "the custom ones are used instead of defaults" do
-        controllers = {:authorizations => "authorizations", :tokens => "tokens"}
+    describe "#controllers" do
+      context "when custom controllers are specified" do
+        context "and all the defaults are overridden" do
+          it "the custom ones are used instead of defaults" do
+            controllers = {:authorizations => "authorizations", :tokens => "tokens"}
 
-        mapping = mapping_class.new(:users, {:controllers => controllers})
+            mapping = mapping_class.new(:users, {:controllers => controllers})
 
-        mapping.controllers.should eql(controllers)
-      end
+            mapping.controllers.should eql(controllers)
+          end
+        end
 
-      it "the custom ones should be merged with defaults" do
-        controllers = {:authorizations => "authorizations"}
+        context "and only some of the defaults are overridden" do
+          it "the custom ones should be merged with defaults" do
+            controllers = {:authorizations => "authorizations"}
 
-        mapping = mapping_class.new(:users, {:controllers => controllers})
+            mapping = mapping_class.new(:users, {:controllers => controllers})
 
-        mapping.controllers.should eql({
-          :authorizations => "authorizations",
-          :tokens         => "devise/oauth2_providable/tokens"
-        })
+            mapping.controllers.should eql({
+              :authorizations => "authorizations",
+              :tokens         => "devise/oauth2_providable/tokens"
+            })
+          end
+        end
       end
     end
   end
