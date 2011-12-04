@@ -1,6 +1,9 @@
 module Devise
   module Oauth2Providable
     class AuthorizationsController < ApplicationController
+      # If the devise internal helpers aren't loaded in the controller then it
+      # has trouble resolving scope on the DeviseHelper module
+      include ::Devise::Controllers::InternalHelpers
       include Devise::Oauth2Providable::Controllers::Helpers
       before_filter :authenticate_scope!
 

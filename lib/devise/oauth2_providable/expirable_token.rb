@@ -9,7 +9,7 @@ module Devise
       module ClassMethods
         def expires_according_to(config_name)
           cattr_accessor :default_lifetime
-          self.default_lifetime = Rails.application.config.devise_oauth2_providable[config_name]
+          self.default_lifetime = ::Rails.application.config.devise_oauth2_providable[config_name]
 
           belongs_to :user
           belongs_to :client

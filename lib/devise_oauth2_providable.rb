@@ -10,13 +10,26 @@ require 'devise/oauth2_providable/models/oauth2_providable'
 require 'devise/oauth2_providable/models/oauth2_password_grantable'
 require 'devise/oauth2_providable/models/oauth2_refresh_token_grantable'
 require 'devise/oauth2_providable/models/oauth2_authorization_code_grantable'
+require 'devise/oauth2_providable/controllers/helpers'
+require 'devise/oauth2_providable/mapping'
+require 'devise/oauth2_providable/rails/routes'
 
 module Devise
   module Oauth2Providable
     CLIENT_ENV_REF = 'oauth2.client'
     REFRESH_TOKEN_ENV_REF = "oauth2.refresh_token"
 
+    mattr_reader :mappings
+    @@mappings = ActiveSupport::OrderedHash.new
+
     class << self
+      def add_mapping(name, options)
+        mapping = Devise::Oauth2Providable::Mapping.new(name, options)
+
+        @@mappings[mapping.scope_name] = mapping
+        mapping
+      end
+
       def random_id
         SecureRandom.hex
       end
