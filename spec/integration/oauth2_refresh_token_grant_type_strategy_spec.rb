@@ -5,9 +5,9 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy do
     describe 'with grant_type=refresh_token' do
       context 'with valid params' do
         with :client
+        with :user
         before do
-          @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
-          @refresh_token = client.refresh_tokens.create! :user => @user
+          @refresh_token = client.refresh_tokens.create! :user => user
           params = {
             :grant_type => 'refresh_token',
             :client_id => client.identifier,
@@ -32,15 +32,67 @@ describe Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy do
         end
       end
       context 'with invalid refresh_token' do
+        with :user
+        with :client
         before do
-          @user = User.create! :email => 'ryan@socialcast.com', :password => 'test'
-          client = Devise::Oauth2Providable::Client.create! :name => 'example', :redirect_uri => 'http://localhost', :website => 'http://localhost'
-          @refresh_token = client.refresh_tokens.create! :user => @user
+          @refresh_token = client.refresh_tokens.create! :user => user
           params = {
             :grant_type => 'refresh_token',
             :client_id => client.identifier,
             :client_secret => client.secret,
             :refresh_token => 'invalid'
+          }
+
+          post '/oauth2/token', params
+        end
+        it { response.code.to_i.should == 400 }
+        it { response.content_type.should == 'application/json' }
+        it 'returns json' do
+          token = Devise::Oauth2Providable::AccessToken.last
+          refresh_token = @refresh_token
+          expected = {
+            :error => 'invalid_grant',
+            :error_description => 'invalid refresh token'
+          }
+          response.body.should match_json(expected)
+        end
+      end
+      context 'with invalid client_id' do
+        with :user
+        with :client
+        before do
+          @refresh_token = client.refresh_tokens.create! :user => user
+          params = {
+            :grant_type => 'refresh_token',
+            :client_id => 'invalid',
+            :client_secret => client.secret,
+            :refresh_token => @refresh_token.token
+          }
+
+          post '/oauth2/token', params
+        end
+        it { response.code.to_i.should == 400 }
+        it { response.content_type.should == 'application/json' }
+        it 'returns json' do
+          token = Devise::Oauth2Providable::AccessToken.last
+          refresh_token = @refresh_token
+          expected = {
+            :error => 'invalid_grant',
+            :error_description => 'invalid refresh token'
+          }
+          response.body.should match_json(expected)
+        end
+      end
+      context 'with invalid client_secret' do
+        with :user
+        with :client
+        before do
+          @refresh_token = client.refresh_tokens.create! :user => user
+          params = {
+            :grant_type => 'refresh_token',
+            :client_id => client.identifier,
+            :client_secret => client.secret,
+            :refresh_token => @refresh_token.token
           }
 
           post '/oauth2/token', params
