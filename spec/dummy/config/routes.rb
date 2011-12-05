@@ -3,5 +3,5 @@ Rails.application.routes.draw do
 
   resources :protected
 
-  mount Devise::Oauth2Providable::Engine => '/oauth2'
+  devise_oauth_for :users, :path_prefix => 'oauth2'
 end

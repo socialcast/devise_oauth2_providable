@@ -1,7 +1,11 @@
 module Devise
   module Oauth2Providable
     class AuthorizationsController < ApplicationController
-      before_filter :authenticate_user!
+      # If the devise internal helpers aren't loaded in the controller then it
+      # has trouble resolving scope on the DeviseHelper module
+      include ::Devise::Controllers::InternalHelpers
+      include Devise::Oauth2Providable::Controllers::Helpers
+      before_filter :authenticate_scope!
 
       rescue_from Rack::OAuth2::Server::Authorize::BadRequest do |e|
         @error = e
@@ -43,7 +47,7 @@ module Devise
                 access_token = current_user.access_tokens.create!(:client => @client).token
                 bearer_token = Rack::OAuth2::AccessToken::Bearer.new(:access_token => access_token)
                 res.access_token = bearer_token
-                res.uid = current_user.id
+                res.uid = resource.id
               end
               res.approve!
             else
