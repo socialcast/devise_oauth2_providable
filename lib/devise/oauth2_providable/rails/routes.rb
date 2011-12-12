@@ -11,10 +11,12 @@ module Devise
           constraints = {}
           defaults    = {}
 
-          devise_scope mapping.scope_name do
-            scope(:as => "#{as}_oauth", :path => path_prefix) do
-              devise_oauth_authorization_routes(mapping, mapping.controllers)
-              devise_oauth_token_routes(mapping, mapping.controllers)
+          devise_scope(mapping.scope_name) do
+            devise_oauth_scope(mapping) do
+              scope(:as => "#{as}_oauth", :path => path_prefix) do
+                devise_oauth_authorization_routes(mapping, mapping.controllers)
+                devise_oauth_token_routes(mapping, mapping.controllers)
+              end
             end
           end
         end
@@ -35,6 +37,17 @@ module Devise
           controller = controllers[:tokens]
 
           resource :token, :only => :create, :controller => controller
+        end
+
+        def devise_oauth_scope(mapping)
+          constraint = lambda do |request|
+            request.env[Devise::Oauth2Providable::MAPPING_ENV_REF] = mapping
+            true
+          end
+
+          constraints(constraint) do
+            yield
+          end
         end
       end
     end
