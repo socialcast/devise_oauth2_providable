@@ -2,6 +2,7 @@ require 'devise'
 require 'rack/oauth2'
 require 'devise/oauth2_providable/engine'
 require 'devise/oauth2_providable/expirable_token'
+require 'devise/oauth2_providable/strategy_helpers'
 require 'devise/oauth2_providable/strategies/oauth2_providable_strategy'
 require 'devise/oauth2_providable/strategies/oauth2_password_grant_type_strategy'
 require 'devise/oauth2_providable/strategies/oauth2_refresh_token_grant_type_strategy'
@@ -14,10 +15,12 @@ require 'devise/oauth2_providable/controllers/helpers'
 require 'devise/oauth2_providable/mapping'
 require 'devise/oauth2_providable/rails/routes'
 
+
 module Devise
   module Oauth2Providable
     CLIENT_ENV_REF = 'oauth2.client'
     REFRESH_TOKEN_ENV_REF = "oauth2.refresh_token"
+    MAPPING_ENV_REF = "devise_oauth2_providable.mapping"
 
     mattr_reader :mappings
     @@mappings = ActiveSupport::OrderedHash.new

@@ -3,6 +3,8 @@ require 'devise/strategies/base'
 module Devise
   module Strategies
     class Oauth2GrantTypeStrategy < Authenticatable
+      include Devise::Oauth2Providable::StrategyHelpers
+
       def valid?
         params[:controller] == 'devise/oauth2_providable/tokens' && request.post? && params[:grant_type] == grant_type
       end
@@ -13,7 +15,7 @@ module Devise
 
       def client
         return @client if @client
-        @client = Devise::Oauth2Providable::Client.find_by_identifier params[:client_id]
+        @client = devise_oauth_mapping.models[:client].find_by_identifier_and_secret(params[:client_id], params[:client_secret])
         env[Devise::Oauth2Providable::CLIENT_ENV_REF] = @client
         @client
       end
@@ -23,6 +25,11 @@ module Devise
         body = {:error => error_code}
         body[:error_description] = description if description
         custom! [400, {'Content-Type' => 'application/json'}, [body.to_json]]
+      end
+
+      protected
+      def devise_oauth_mapping
+        env[Devise::Oauth2Providable::MAPPING_ENV_REF]
       end
     end
   end
