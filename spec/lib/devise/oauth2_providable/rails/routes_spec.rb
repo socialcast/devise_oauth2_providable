@@ -19,7 +19,7 @@ describe Devise::Oauth2Providable::Rails::Routes do
     end
 
     it "creates a new mapping" do
-      devise_mod.should_receive(:add_mapping).
+      devise_mod.should_receive(:mapping).
         with(scope_name, options).
         and_return(mock_mapping)
 

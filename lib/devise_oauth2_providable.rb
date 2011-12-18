@@ -26,11 +26,14 @@ module Devise
     @@mappings = ActiveSupport::OrderedHash.new
 
     class << self
-      def add_mapping(name, options)
-        mapping = Devise::Oauth2Providable::Mapping.new(name, options)
+      def mapping(name, options={})
+        scope = Mapping.scope_name(name, options)
 
-        @@mappings[mapping.scope_name] = mapping
-        mapping
+        if @@mappings.has_key?(scope)
+          @@mappings[scope].apply_options(options)
+        else
+          @@mappings[scope] = Mapping.new(name, options)
+        end
       end
 
       def random_id

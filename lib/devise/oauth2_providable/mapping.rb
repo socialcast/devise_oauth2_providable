@@ -17,8 +17,6 @@ module Devise
     #
     #   mapping.prefix
     class Mapping
-      attr_reader :scope_name, :path_prefix, :controllers, :models
-
       class << self
         def default_controllers
           {
@@ -35,13 +33,26 @@ module Devise
             :user           => 'User',
           }
         end
+
+        def scope_name(scope_name, options={})
+          (options[:scope_name] || scope_name.to_s.singularize).to_sym
+        end
       end
 
+      attr_reader :scope_name, :path_prefix, :controllers, :models
+
       def initialize(scope_name, options = {})
-        @scope_name  = (options[:scope_name] || scope_name.to_s.singularize).to_sym
+        @scope_name  = self.class.scope_name(scope_name, options)
+        @models      = self.class.default_models
+        @controllers = self.class.default_controllers
+        apply_options(options)
+      end
+
+      def apply_options(options)
         @path_prefix = options[:path_prefix]
         @controllers = self.select_controllers(options)
         @models      = self.select_models(options)
+        self
       end
 
       # Returns the devise scope mapping object associated with this oauth endpoint
@@ -49,15 +60,29 @@ module Devise
         Devise.mappings[self.scope_name]
       end
 
+      def access_token
+        models[:access_token].constantize
+      end
+
+      def client
+        models[:client].constantize
+      end
+
+      def refresh_token
+        models[:refresh_token].constantize
+      end
+
+      def user
+        models[:user].constantize
+      end
+
       protected
       def select_controllers(options)
-        self.class.default_controllers.merge(options[:controllers] || {})
+        @controllers.merge(options[:controllers] || {})
       end
 
       def select_models(options)
-        models = self.class.default_models.merge(self.scope_config[:models] || {})
-
-        models.each { |key,value| models[key] = value.constantize }
+        models = @models.merge(options[:models] || self.scope_config[:models] || {})
       end
 
       def scope_config

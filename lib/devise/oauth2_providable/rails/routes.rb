@@ -4,7 +4,7 @@ module Devise
     module Rails
       module Routes
         def devise_oauth_for(scope, options = {})
-          mapping = Devise::Oauth2Providable.add_mapping(scope, options)
+          mapping = Devise::Oauth2Providable.mapping(scope, options)
 
           path_prefix = mapping.path_prefix
           as          = mapping.scope_name

@@ -6,7 +6,8 @@ module Devise
       include Devise::Oauth2Providable::StrategyHelpers
 
       def valid?
-        params[:controller] == 'devise/oauth2_providable/tokens' && request.post? && params[:grant_type] == grant_type
+        return false if devise_oauth_mapping.nil?
+        params[:controller] == devise_oauth_mapping.controllers[:tokens] && request.post? && params[:grant_type] == grant_type
       end
 
       # defined by subclass
@@ -15,7 +16,7 @@ module Devise
 
       def client
         return @client if @client
-        @client = devise_oauth_mapping.models[:client].find_by_identifier_and_secret(params[:client_id], params[:client_secret])
+        @client = devise_oauth_mapping.client.find_by_identifier_and_secret(params[:client_id], params[:client_secret])
         env[Devise::Oauth2Providable::CLIENT_ENV_REF] = @client
         @client
       end

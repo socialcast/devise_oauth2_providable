@@ -34,10 +34,10 @@ module Devise
       end
 
       def authorize_endpoint(allow_approval = false)
-        models = self.devise_oauth_mapping.models
+        mapping = self.devise_oauth_mapping
 
         Rack::OAuth2::Server::Authorize.new do |req, res|
-          @client = models[:client].find_by_identifier(req.client_id) || req.bad_request!
+          @client = mapping.client.find_by_identifier(req.client_id) || req.bad_request!
           res.redirect_uri = req.verify_redirect_uri!(@client.redirect_uri)
           if allow_approval
             if params[:approve].present?
