@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency(%q<pry>, ['0.9.6.2'])
   s.add_development_dependency(%q<factory_girl>, ['2.2.0'])
   s.add_development_dependency(%q<factory_girl_rspec>, ['0.0.1'])
+  s.add_development_dependency(%q<rake>, ['0.9.2.2'])
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
