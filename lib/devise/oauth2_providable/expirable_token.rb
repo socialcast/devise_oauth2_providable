@@ -23,7 +23,10 @@ module Devise
           scope :not_expired, lambda {
             where(self.arel_table[:expires_at].gteq(Time.now.utc))
           }
-          default_scope not_expired
+
+          default_scope lambda {
+            where(self.arel_table[:expires_at].gteq(Time.now.utc))
+          }
 
           include LocalInstanceMethods
         end
@@ -55,3 +58,4 @@ module Devise
 end
 
 ActiveRecord::Base.send :include, Devise::Oauth2Providable::ExpirableToken
+
