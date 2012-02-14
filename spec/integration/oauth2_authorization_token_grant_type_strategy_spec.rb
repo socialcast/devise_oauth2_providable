@@ -12,7 +12,8 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
             :grant_type => 'authorization_code',
             :client_id => client.identifier,
             :client_secret => client.secret,
-            :code => @authorization_code.token
+            :code => @authorization_code.token,
+            :redirect_uri => client.redirect_uri
           }
 
           post '/oauth2/token', params
@@ -42,7 +43,8 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
             :grant_type => 'authorization_code',
             :client_id => client.identifier,
             :client_secret => client.secret,
-            :code => @authorization_code.token
+            :code => @authorization_code.token,
+            :redirect_uri => client.redirect_uri
           }
           Time.stub!(:now).and_return(timenow + 10.minutes)
 
@@ -67,7 +69,8 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
             :grant_type => 'authorization_code',
             :client_id => client.identifier,
             :client_secret => client.secret,
-            :code => 'invalid'
+            :code => 'invalid',
+            :redirect_uri => client.redirect_uri
           }
 
           post '/oauth2/token', params
@@ -91,7 +94,8 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
             :grant_type => 'authorization_code',
             :client_id => client.identifier,
             :client_secret => 'invalid',
-            :code => @authorization_code.token
+            :code => @authorization_code.token,
+            :redirect_uri => client.redirect_uri
           }
 
           post '/oauth2/token', params
@@ -115,7 +119,8 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
             :grant_type => 'authorization_code',
             :client_id => 'invalid',
             :client_secret => client.secret,
-            :code => @authorization_code.token
+            :code => @authorization_code.token,
+            :redirect_uri => client.redirect_uri
           }
 
           post '/oauth2/token', params
@@ -126,6 +131,31 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
           expected = {
             :error => 'invalid_client',
             :error_description => 'invalid client credentials'
+          }
+          response.body.should match_json(expected)
+        end
+      end
+      context 'with invalid redirect_uri' do
+        with :user
+        with :client
+        before do
+          @authorization_code = user.authorization_codes.create(:client_id => client, :redirect_uri => client.redirect_uri)
+          params = {
+            :grant_type => 'authorization_code',
+            :client_id => client.identifier,
+            :client_secret => client.secret,
+            :code => @authorization_code.token,
+            :redirect_uri => 'invalid'
+          }
+
+          post '/oauth2/token', params
+        end
+        it { response.code.to_i.should == 400 }
+        it { response.content_type.should == 'application/json' }
+        it 'returns json' do
+          expected = {
+            :error => 'invalid_grant',
+            :error_description => 'invalid authorization code request'
           }
           response.body.should match_json(expected)
         end
