@@ -1,5 +1,5 @@
 class Devise::Oauth2Providable::TokensController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :check_ssl, :authenticate_user!
   skip_before_filter :verify_authenticity_token, :only => :create
 
   def create
@@ -14,4 +14,11 @@ class Devise::Oauth2Providable::TokensController < ApplicationController
   def oauth2_current_refresh_token
     env[Devise::Oauth2Providable::REFRESH_TOKEN_ENV_REF]
   end
+
+  def check_ssl
+    if Rails.application.config.devise_oauth2_providable[:force_ssl] && !request.ssl?
+      render :json => {:error => "SSL Required"}, :status => 403, :header => {'Content-Type' => 'application/json'}
+    end
+  end
 end
+

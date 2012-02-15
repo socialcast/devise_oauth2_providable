@@ -8,7 +8,9 @@ module Devise
       end
 
       def authenticate!
-        if client && refresh_token = client.refresh_tokens.find_by_token(params[:refresh_token])
+        if client.nil?
+          oauth_error! :invalid_client, 'invalid client credentials'
+        elsif refresh_token = client.refresh_tokens.find_by_token(params[:refresh_token])
           env[Devise::Oauth2Providable::REFRESH_TOKEN_ENV_REF] = refresh_token
           success! refresh_token.user
         elsif !halted?
@@ -20,3 +22,4 @@ module Devise
 end
 
 Warden::Strategies.add(:oauth2_refresh_token_grantable, Devise::Strategies::Oauth2RefreshTokenGrantTypeStrategy)
+

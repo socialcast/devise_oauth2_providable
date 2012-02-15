@@ -1,7 +1,7 @@
 module Devise
   module Oauth2Providable
     class AuthorizationsController < ApplicationController
-      before_filter :authenticate_user!
+      before_filter :check_ssl, :authenticate_user!
 
       rescue_from Rack::OAuth2::Server::Authorize::BadRequest do |e|
         @error = e
@@ -54,6 +54,13 @@ module Devise
           end
         end
       end
+
+      def check_ssl
+        if Rails.application.config.devise_oauth2_providable[:force_ssl] && !request.ssl?
+          render :json => {:error => "SSL Required"}, :status => 403, :header => {'Content-Type' => 'application/json'}
+        end
+      end
     end
   end
 end
+
