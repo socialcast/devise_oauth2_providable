@@ -5,6 +5,7 @@ module Devise
       config.devise_oauth2_providable.access_token_expires_in       = 15.minutes
       config.devise_oauth2_providable.refresh_token_expires_in      = 1.month
       config.devise_oauth2_providable.authorization_code_expires_in = 1.minute
+      config.devise_oauth2_providable.force_ssl = false
 
       engine_name 'oauth2'
       isolate_namespace Devise::Oauth2Providable
@@ -14,3 +15,4 @@ module Devise
     end
   end
 end
+
