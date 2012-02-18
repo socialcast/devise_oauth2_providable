@@ -11,12 +11,21 @@ module Devise
       def grant_type
       end
 
-      def client
-        return @client if @client
-        @client = Devise::Oauth2Providable::Client.find_by_identifier params[:client_id]
-        env[Devise::Oauth2Providable::CLIENT_ENV_REF] = @client
-        @client
+      # defined by subclass
+      def authenticate_grant_type(client)
       end
+
+      def authenticate!
+        client_id, client_secret = request.authorization ? decode_credentials : [params[:client_id], params[:client_secret]]
+        client = Devise::Oauth2Providable::Client.find_by_identifier params[:client_id]
+        if client && client.secret == client_secret
+          env[Devise::Oauth2Providable::CLIENT_ENV_REF] = client
+          authenticate_grant_type(client)
+        else
+          oauth_error! :invalid_client, 'invalid client credentials'
+        end
+      end
+
       # return custom error response in accordance with the oauth spec
       # see http://tools.ietf.org/html/draft-ietf-oauth-v2-16#section-4.3
       def oauth_error!(error_code = :invalid_request, description = nil)

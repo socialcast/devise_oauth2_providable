@@ -7,8 +7,8 @@ module Devise
         'refresh_token'
       end
 
-      def authenticate!
-        if client && refresh_token = client.refresh_tokens.find_by_token(params[:refresh_token])
+      def authenticate_grant_type(client)
+        if refresh_token = client.refresh_tokens.find_by_token(params[:refresh_token])
           env[Devise::Oauth2Providable::REFRESH_TOKEN_ENV_REF] = refresh_token
           success! refresh_token.user
         elsif !halted?
