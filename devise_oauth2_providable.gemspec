@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency(%q<devise>, [">= 1.4.3"])
   s.add_runtime_dependency(%q<rack-oauth2>, ["~> 0.11.0"])
   s.add_development_dependency(%q<rspec-rails>, ['2.6.1'])
-  s.add_development_dependency(%q<sqlite3>, ['1.3.4'])
+  s.add_development_dependency(%q<sqlite3>, ['~> 1.3.5'])
   s.add_development_dependency(%q<shoulda-matchers>, ['1.0.0.beta3'])
   s.add_development_dependency(%q<pry>, ['0.9.6.2'])
   s.add_development_dependency(%q<factory_girl>, ['2.2.0'])
