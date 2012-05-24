@@ -4,7 +4,7 @@ module Devise
   module Strategies
     class Oauth2GrantTypeStrategy < Authenticatable
       def valid?
-        params[:controller] == 'devise/oauth2_providable/tokens' && request.post? && params[:grant_type] == grant_type
+        env['action_controller.instance'].kind_of?(Devise::Oauth2Providable::TokensController) && request.post? && params[:grant_type] == grant_type
       end
 
       # defined by subclass
