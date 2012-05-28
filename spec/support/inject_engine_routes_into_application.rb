@@ -37,7 +37,7 @@ module Devise
 
           engine.routes.routes.each do |route|
             # Call the method by hand based on the symbol
-            path = "/#{engine_name.underscore}#{route.path}"
+            path = "/#{engine_name.underscore}#{route.path.spec}"
             requirements = route.requirements
             if path_helper = named_routes[route]
               requirements[:as] = path_helper
@@ -45,10 +45,10 @@ module Devise
               # Presume that all controllers referenced in routes should also be
               # resources and append that routing on the end so that *_path helpers
               # will still work
-              resourced_routes << route.requirements[:controller].gsub("#{engine_name.downcase}/", "").to_sym
+              resourced_routes << route.requirements[:controller].gsub("#{engine_name.underscore}/", "").to_sym
             end
 
-            verb = (route.verb.blank? ? "GET" : route.verb).downcase.to_sym
+            verb = route.verb.to_s.downcase.gsub(/^.+\^(.+)\$.+$/, '\1').to_sym #(route.verb.blank? ? "GET" : route.verb).downcase.to_sym
             send(verb, path, requirements) if respond_to?(verb)
           end
   
