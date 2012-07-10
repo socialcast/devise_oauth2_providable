@@ -32,6 +32,7 @@ module Devise
         body = {:error => error_code}
         body[:error_description] = description if description
         custom! [400, {'Content-Type' => 'application/json'}, [body.to_json]]
+        throw :warden
       end
     end
   end

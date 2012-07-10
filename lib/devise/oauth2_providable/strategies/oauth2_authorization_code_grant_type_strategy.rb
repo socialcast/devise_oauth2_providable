@@ -10,7 +10,7 @@ module Devise
       def authenticate_grant_type(client)
         if code = client.authorization_codes.find_by_token(params[:code])
           success! code.user
-        elsif !halted?
+        else
           oauth_error! :invalid_grant, 'invalid authorization code request'
         end
       end
