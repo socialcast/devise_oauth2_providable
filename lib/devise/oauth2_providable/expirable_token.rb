@@ -14,6 +14,8 @@ module Devise
           belongs_to :user
           belongs_to :client
 
+          attr_accessible :user, :client
+
           after_initialize :init_token, :on => :create, :unless => :token?
           after_initialize :init_expires_at, :on => :create, :unless => :expires_at?
           validates :expires_at, :presence => true
@@ -54,4 +56,3 @@ module Devise
 end
 
 ActiveRecord::Base.send :include, Devise::Oauth2Providable::ExpirableToken
-
