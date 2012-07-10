@@ -71,4 +71,4 @@ module Devise
   end
 end
 
-Rails::Engine.send(:include, Devise::Oauth2Providable::EngineHacks)
+# Rails::Engine.send(:include, Devise::Oauth2Providable::EngineHacks)
