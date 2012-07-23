@@ -1,4 +1,35 @@
-*.gem
+# rcov generated
+coverage
+
+# rdoc generated
+rdoc
+
+# yard generated
+doc
+.yardoc
+
+# bundler
 .bundle
 Gemfile.lock
-pkg/*
+
+# jeweler generated
+pkg
+
+# test files
+test/*.log
+test/*.sqlite3
+
+# For vim:
+*.swp
+
+# For MacOS:
+.DS_Store
+
+# git files
+*.orig
+
+# rails files
+tmp
+log
+*.log
+*.sqlite3

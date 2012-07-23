@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "devise_oauth2_providable/version"
+require "devise/oauth2_providable/version"
 
 Gem::Specification.new do |s|
   s.name        = "devise_oauth2_providable"
@@ -14,10 +14,16 @@ Gem::Specification.new do |s|
 
   s.rubyforge_project = "devise_oauth2_providable"
 
-  s.add_runtime_dependency(%q<rails>, [">= 3.0.7"])
-  s.add_runtime_dependency(%q<devise>, [">= 1.3.3"])
-  s.add_runtime_dependency(%q<rack-oauth2>, [">= 0.6.3"])
-  s.add_development_dependency(%q<rspec>, ['>= 2.5.0'])
+  s.add_runtime_dependency(%q<rails>, [">= 3.1.0"])
+  s.add_runtime_dependency(%q<devise>, [">= 1.4.3"])
+  s.add_runtime_dependency(%q<rack-oauth2>, ["~> 0.11.0"])
+  s.add_development_dependency(%q<rspec-rails>, ['2.6.1'])
+  s.add_development_dependency(%q<sqlite3>, ['1.3.5'])
+  s.add_development_dependency(%q<shoulda-matchers>, ['1.0.0.beta3'])
+  s.add_development_dependency(%q<pry>, ['0.9.6.2'])
+  s.add_development_dependency(%q<factory_girl>, ['2.2.0'])
+  s.add_development_dependency(%q<factory_girl_rspec>, ['0.0.1'])
+  s.add_development_dependency(%q<rake>, ['0.9.2.2'])
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

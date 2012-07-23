@@ -1,9 +1,7 @@
-require 'token_endpoint'
-Rails.application.routes.draw do
-  namespace 'oauth2' do
-    resources :authorizations, :only => :create
-  end
+Devise::Oauth2Providable::Engine.routes.draw do
+  root :to => "authorizations#new"
 
-  match 'oauth2/authorize' => 'oauth2/authorizations#new'
-  post 'oauth2/token' => TokenEndpoint.new
+  resources :authorizations, :only => :create
+  match 'authorize' => 'authorizations#new'
+  resource :token, :only => :create
 end
