@@ -7,7 +7,6 @@ module Devise
       config.devise_oauth2_providable.authorization_code_expires_in = 1.minute
 
       engine_name 'oauth2'
-      isolate_namespace Devise::Oauth2Providable
       initializer "devise_oauth2_providable.initialize_application", :before=> :load_config_initializers do |app|
         app.config.filter_parameters << :client_secret
       end
