@@ -7,7 +7,7 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
         with :client
         with :user
         before do
-          @authorization_code = user.authorization_codes.create(:client_id => client, :redirect_uri => client.redirect_uri)
+          @authorization_code = user.authorization_codes.create(:client_id => client.id,  :redirect_uri => client.redirect_uri)
           params = {
             :grant_type => 'authorization_code',
             :client_id => client.identifier,
@@ -38,7 +38,7 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
         before do
           timenow = 2.days.from_now
           Time.stub!(:now).and_return(timenow)
-          @authorization_code = user.authorization_codes.create(:client_id => client, :redirect_uri => client.redirect_uri)
+          @authorization_code = user.authorization_codes.create(:client_id => client.id,  :redirect_uri => client.redirect_uri)
           params = {
             :grant_type => 'authorization_code',
             :client_id => client.identifier,
@@ -64,7 +64,7 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
         with :client
         with :user
         before do
-          @authorization_code = user.authorization_codes.create(:client_id => client, :redirect_uri => client.redirect_uri)
+          @authorization_code = user.authorization_codes.create(:client_id => client.id,  :redirect_uri => client.redirect_uri)
           params = {
             :grant_type => 'authorization_code',
             :client_id => client.identifier,
@@ -89,7 +89,7 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
         with :user
         with :client
         before do
-          @authorization_code = user.authorization_codes.create(:client_id => client, :redirect_uri => client.redirect_uri)
+          @authorization_code = user.authorization_codes.create(:client_id => client.id,  :redirect_uri => client.redirect_uri)
           params = {
             :grant_type => 'authorization_code',
             :client_id => client.identifier,
@@ -114,7 +114,7 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
         with :user
         with :client
         before do
-          @authorization_code = user.authorization_codes.create(:client_id => client, :redirect_uri => client.redirect_uri)
+          @authorization_code = user.authorization_codes.create(:client_id => client.id,  :redirect_uri => client.redirect_uri)
           params = {
             :grant_type => 'authorization_code',
             :client_id => 'invalid',
@@ -139,7 +139,7 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
         with :user
         with :client
         before do
-          @authorization_code = user.authorization_codes.create(:client_id => client, :redirect_uri => client.redirect_uri)
+          @authorization_code = user.authorization_codes.create(:client_id => client.id,  :redirect_uri => client.redirect_uri)
           params = {
             :grant_type => 'authorization_code',
             :client_id => client.identifier,

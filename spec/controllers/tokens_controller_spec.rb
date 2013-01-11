@@ -7,7 +7,7 @@ describe Devise::Oauth2Providable::TokensController do
       with :user
       before do
         Devise::Oauth2Providable::Engine.config.devise_oauth2_providable.force_ssl = true
-        @authorization_code = user.authorization_codes.create(:client_id => client, :redirect_uri => client.redirect_uri)
+        @authorization_code = user.authorization_codes.create(:client_id => client.id, :redirect_uri => client.redirect_uri)
         @params = {
           :grant_type => 'authorization_code',
           :client_id => client.identifier,
