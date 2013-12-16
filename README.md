@@ -1,4 +1,4 @@
-!(https://travis-ci.org/NadaAldahleh/devise_oauth2_providable.png)
+![](https://travis-ci.org/NadaAldahleh/devise_oauth2_providable.png)
 
 # devise_oauth2_providable
 
