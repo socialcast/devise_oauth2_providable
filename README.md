@@ -1,3 +1,5 @@
+!(https://travis-ci.org/NadaAldahleh/devise_oauth2_providable.png)
+
 # devise_oauth2_providable
 
 Rails3 engine that brings OAuth2 Provider support to your application.
