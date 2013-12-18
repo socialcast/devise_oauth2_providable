@@ -13,7 +13,7 @@ module Devise
           oauth_error! :invalid_client, 'invalid client credentials'
         elsif validate(resource) { resource.valid_password?(params[:password]) }
           success! resource
-        elsif !halted?
+        else
           oauth_error! :invalid_grant, 'invalid password authentication request'
         end
       end

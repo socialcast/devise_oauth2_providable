@@ -92,10 +92,7 @@ Devise.setup do |config|
   # If true, extends the user's remember period when remembered via cookie.
   # config.extend_remember_period = false
 
-  # If true, uses the password salt as remember token. This should be turned
-  # to false if you are not using database authenticatable.
-  config.use_salt_as_remember_token = true
-
+  config.secret_key = '0b10b06190153c02f4cfc537a84c68516e0dd6cb9f874f9661d0d2aee935b0ab268cd0f6608eaee8a1875907bf8cee0d446c2b13dd81377d39a78d39684062c9'
   # Options to be passed to the created cookie. For instance, you can set
   # :secure => true in order to force SSL only cookies.
   # config.cookie_options = {}
