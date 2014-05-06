@@ -1,3 +1,5 @@
+# THIS GEM IS NO LONGER MAINTAINED AND IS CONSIDERED DEPRECATED.
+
 # devise_oauth2_providable
 
 Rails3 engine that brings OAuth2 Provider support to your application.
@@ -48,7 +50,7 @@ end
 class User
   # NOTE: include :database_authenticatable configuration
   # if supporting Resource Owner Password Credentials Grant Type
-  devise :oauth2_providable, 
+  devise :oauth2_providable,
     :oauth2_password_grantable,
     :oauth2_refresh_token_grantable,
     :oauth2_authorization_code_grantable
@@ -143,7 +145,7 @@ http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.2
 http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-6
 
 ## Contributing
- 
+
 * Fork the project
 * Fix the issue
 * Add unit tests
@@ -153,6 +155,6 @@ See CONTRIBUTORS.txt for list of project contributors
 
 ## Copyright
 
-Copyright (c) 2011 Socialcast, Inc. 
+Copyright (c) 2011 Socialcast, Inc.
 See LICENSE.txt for further details.
 
