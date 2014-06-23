@@ -1,5 +1,4 @@
-class Devise::Oauth2Providable::TokensController < ApplicationController
-  before_filter :authenticate_user!
+class Devise::Oauth2Providable::TokensController < Devise::Oauth2Providable::BaseController
   skip_before_filter :verify_authenticity_token, :only => :create
 
   def create
