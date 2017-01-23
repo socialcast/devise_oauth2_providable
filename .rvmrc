@@ -1,1 +1,1 @@
-rvm use ree-1.8.7-2011.03@devise_oauth2_providable --create
+rvm use @devise_oauth2_providable --create

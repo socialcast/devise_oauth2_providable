@@ -1,11 +1,3 @@
-require 'expirable_token'
-
 class Devise::Oauth2Providable::AuthorizationCode < ActiveRecord::Base
-  include ExpirableToken
-  def access_token
-    @access_token ||= expired! && user.access_tokens.create(:client => client)
-  end
-  def valid_request?(req)
-    self.redirect_uri == req.redirect_uri
-  end
+  expires_according_to :authorization_code_expires_in
 end
